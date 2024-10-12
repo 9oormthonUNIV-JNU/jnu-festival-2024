@@ -1,8 +1,7 @@
 package com.jnu.festival.global.error;
 
-import com.jnu.festival.global.ResponseDto;
+import com.jnu.festival.global.util.ResponseDto;
 import com.jnu.festival.global.error.exception.BusinessException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
