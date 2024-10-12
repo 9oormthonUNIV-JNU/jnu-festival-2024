@@ -1,6 +1,6 @@
 package com.jnu.festival.domain.like.service;
 
-import com.jnu.festival.domain.entity.User;
+import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.like.repository.LikeJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

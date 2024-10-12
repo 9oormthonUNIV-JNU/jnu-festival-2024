@@ -1,6 +1,8 @@
 package com.jnu.festival.domain.booth.entity;
 
 
+import com.jnu.festival.domain.common.Location;
+
 import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,65 +10,65 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "booths")
+@Table(name = "booth")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Booth extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column
-    @Enumerated(EnumType.STRING)
+    @Column(name = "location", nullable = false)
     private Location location;
 
-    @Column
+    @Column(name = "index", nullable = false)
     private Integer index;
 
-    @Column
-    private Date startDate;
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
-    @Column
-    private Date endDate;
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
 
-    @Column
-    private Date startTime;
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
 
-    @Column
-    private Date endTime;
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
 
-    @Column
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column(name = "category", nullable = false)
+    private BoothCategory category;
 
-    @Column
-    @Enumerated(EnumType.STRING)
+    @Column(name = "period", nullable = false)
     private Period period;
 
-    @Column
+    @Column(name = "image", nullable = false)
     private String image;
 
     @Builder
-    public Booth(String name, Category category, Date endDate, Period period, Location location, Integer index, Date startDate, Date startTime, Date endTime, String description, String image) {
+    public Booth(String name, Location location, Integer index,
+                 LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime,
+                 String description, BoothCategory category, Period period, String image) {
         this.name = name;
-        this.category = category;
         this.location = location;
-        this.description = description;
-        this.image = image;
-        this.endDate = endDate;
+        this.index = index;
         this.startDate = startDate;
+        this.endDate = endDate;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.index = index;
+        this.description = description;
+        this.category = category;
         this.period = period;
+        this.image = image;
     }
 }

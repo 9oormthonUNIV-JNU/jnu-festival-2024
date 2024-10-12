@@ -1,12 +1,16 @@
 package com.jnu.festival.domain.booth.dto;
 
-import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.booth.entity.Category;
-import com.jnu.festival.domain.booth.entity.Location;
-import com.jnu.festival.domain.booth.entity.Period;
+import com.jnu.festival.domain.booth.entity.*;
+import com.jnu.festival.domain.common.Location;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class BoothResponseDTO {
@@ -14,16 +18,16 @@ public class BoothResponseDTO {
     @Setter
     public static class BoothDetailDTO {
 
-        private int id;
+        private Long id;
         private String name;
         private Location location;
         private Integer index;
-        private Date startDate;
-        private Date endDate;
-        private Date startTime;
-        private Date endTime;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private LocalTime startTime;
+        private LocalTime endTime;
         private String description;
-        private Category category;
+        private BoothCategory category;
         private Period period;
         private String image;
 
@@ -49,24 +53,16 @@ public class BoothResponseDTO {
     @Setter
     public static class BoothListDTO {
 
-        //부스 id
-        private int id;
-        //부스이름
-        private String name;
-        //부스 index
-        private Integer index;
-        // 부스 location
-        private Location location;
-        // 시작 일자
-        private Date startDate;
-        // 종료 일자
-        private Date endDate;
-        // 시작 시간
-        private Date startTime;
-        // 종료 시간
-        private Date endTime;
 
-        private Category category;
+        private Long id;
+        private String name;
+        private Location location;
+        private Integer index;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private LocalTime startTime;
+        private LocalTime endTime;
+        private BoothCategory category;
         private Period period;
 
 
@@ -76,8 +72,14 @@ public class BoothResponseDTO {
             dto.id = booth.getId();
             dto.name = booth.getName();
             dto.location = booth.getLocation();
-            dto.period = booth.getPeriod();
+            dto.index = booth.getIndex();
+            dto.startDate = booth.getStartDate();
+            dto.endDate = booth.getEndDate();
+            dto.startTime = booth.getStartTime();
+            dto.endTime = booth.getEndTime();
             dto.category = booth.getCategory();
+            dto.period = booth.getPeriod();
+
             return dto;
         }
     }

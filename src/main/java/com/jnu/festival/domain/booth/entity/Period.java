@@ -6,9 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Period {
-    DAYTIME("Daytime"),
-    NIGHTTIME("Nighttime"),
-    FULLTIME("Fulltime");
-
-    private final String period;
+    DAYTIME,
+    NIGHTTIME,
+    ALLTIME;
 }

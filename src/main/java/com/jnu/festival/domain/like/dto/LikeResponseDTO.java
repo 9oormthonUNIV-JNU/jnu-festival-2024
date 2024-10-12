@@ -1,7 +1,6 @@
 package com.jnu.festival.domain.like.dto;
 
-import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.entity.User;
+
 import com.jnu.festival.domain.like.entity.Like;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class LikeResponseDTO {
 
-    private int userId;
-    private int boothId;
+    private Long userId;
+    private Long boothId;
     private boolean is_deleted;
 
     public LikeResponseDTO(Like like) {
