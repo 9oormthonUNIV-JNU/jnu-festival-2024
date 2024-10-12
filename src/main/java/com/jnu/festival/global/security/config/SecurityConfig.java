@@ -54,7 +54,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/login",
                                 "/api/v1/partners/**",
-                                "/api/v1/contents/**").permitAll()
+                                "/api/v1/contents/**",
+                                "/api/v1/booths/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout

@@ -9,7 +9,7 @@ public class LikeRequestDTO {
 
     private int userId;
     private int boothId;
-    private boolean is_deleted;
+    private boolean isDeleted;
 
 }
 

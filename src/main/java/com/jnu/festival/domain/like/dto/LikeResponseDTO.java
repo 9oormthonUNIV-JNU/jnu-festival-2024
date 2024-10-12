@@ -11,11 +11,11 @@ public class LikeResponseDTO {
 
     private Long userId;
     private Long boothId;
-    private boolean is_deleted;
+    private boolean isDeleted;
 
     public LikeResponseDTO(Like like) {
         this.userId = like.getUser().getId();
         this.boothId = like.getBooth().getId();
-        this.is_deleted = like.is_deleted();
+        this.isDeleted = like.isDeleted();
     }
 }

@@ -3,6 +3,7 @@ package com.jnu.festival.domain.booth.controller;
 
 import com.jnu.festival.domain.booth.dto.BoothResponseDTO;
 import com.jnu.festival.domain.booth.service.BoothService;
+import com.jnu.festival.global.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +26,13 @@ public class BoothController {
                                           @RequestParam(value = "period", required = false) String period,
                                           @RequestParam(value = "category", required = false) String category) {
         List<BoothResponseDTO.BoothListDTO> responseDTO = boothService.getBoothList(location, period, category);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
-        //return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(responseDTO));
+        return ResponseEntity.ok(ResponseDto.ok(responseDTO));
     }
 
     @GetMapping("/api/v1/booths/{boothId}")
-    public ResponseEntity<?> getBoothDetail(@PathVariable int boothId) {
+    public ResponseEntity<?> getBoothDetail(@PathVariable Long boothId) {
         BoothResponseDTO.BoothDetailDTO responseDTO = boothService.getBoothDetail(boothId);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
-        //return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(responseDTO));
+        return ResponseEntity.ok(ResponseDto.ok(responseDTO));
     }
 
 }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoothJPARepository extends JpaRepository<Booth, Integer> {
+public interface BoothJPARepository extends JpaRepository<Booth, Long> {
 
     @Query("SELECT b FROM Booth b WHERE "
             + "(:location IS NULL OR b.location = :location) AND "
