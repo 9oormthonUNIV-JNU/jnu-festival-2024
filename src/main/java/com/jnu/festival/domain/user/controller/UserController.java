@@ -5,7 +5,7 @@ import com.jnu.festival.domain.bookmark.dto.response.ContentBookmarkListDto;
 import com.jnu.festival.domain.bookmark.dto.response.PartnerBookmarkListDto;
 import com.jnu.festival.domain.user.dto.response.UserDto;
 import com.jnu.festival.domain.user.service.UserService;
-import com.jnu.festival.global.ResponseDto;
+import com.jnu.festival.global.util.ResponseDto;
 import com.jnu.festival.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
