@@ -26,9 +26,17 @@ public class BoothBookmark {
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
+    @Column(nullable = false)
+    private boolean isDeleted = false;
+
     @Builder
-    public BoothBookmark(User user, Booth booth) {
+    public BoothBookmark(User user, Booth booth, boolean isDeleted) {
         this.user = user;
         this.booth = booth;
+        this.isDeleted = isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

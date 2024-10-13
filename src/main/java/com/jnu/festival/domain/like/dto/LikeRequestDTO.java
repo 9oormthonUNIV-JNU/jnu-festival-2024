@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class LikeRequestDTO {
 
-    private int userId;
-    private int boothId;
+    private Long userId;
+    private Long boothId;
     private boolean isDeleted;
 
 }
