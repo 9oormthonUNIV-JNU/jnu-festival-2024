@@ -23,8 +23,8 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createFeedback(@RequestPart FeedbackRequestDto request, @RequestPart List<MultipartFile> images, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        feedbackService.createFeedback(request, images, userDetails);
+    public ResponseEntity<?> createFeedback(@RequestPart FeedbackRequestDto request, @RequestPart MultipartFile image, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        feedbackService.createFeedback(request, image, userDetails);
         return ResponseEntity.ok().body(ResponseDto.created(null));
     }
 

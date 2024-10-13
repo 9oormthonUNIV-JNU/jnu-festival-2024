@@ -17,6 +17,8 @@ public enum ErrorCode {
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
     NOT_FOUND_BOOTH(HttpStatus.NOT_FOUND, "존재하지 않는 부스입니다."),
     NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다"),
+    NOT_FOUND_CONTENT(HttpStatus.NOT_FOUND, "존재하지 않는 컨텐츠입니다."),
+    NOT_FOUND_CONTENTBOOKMARK(HttpStatus.NOT_FOUND, "존재하지 않는 컨텐츠 북마크입니다."),
 
     // Invalid Argument Error
     INVALID_SOCKET_ERROR(HttpStatus.BAD_REQUEST, "유효하지 않은 소켓입니다."),
