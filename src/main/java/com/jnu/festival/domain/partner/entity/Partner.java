@@ -1,13 +1,12 @@
 package com.jnu.festival.domain.partner.entity;
 
 import com.jnu.festival.domain.common.Location;
-import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import com.jnu.festival.global.util.BaseTimeEntity;
 import java.time.LocalDate;
 
 @Entity
@@ -33,6 +32,8 @@ public class Partner extends BaseTimeEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+
 
     @Builder
     public Partner(String name, Location location, LocalDate startDate, LocalDate endDate, String description) {

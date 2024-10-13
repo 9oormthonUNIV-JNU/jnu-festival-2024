@@ -4,7 +4,7 @@ package com.jnu.festival.domain.booth.service;
 import com.jnu.festival.domain.booth.entity.Booth;
 import com.jnu.festival.domain.booth.dto.BoothResponseDTO;
 import com.jnu.festival.domain.booth.repository.BoothJPARepository;
-import com.jnu.festival.global.S3Service;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 public class BoothService {
-    private final S3Service s3Service;
+
 
     private final BoothJPARepository boothJPARepository;
 
