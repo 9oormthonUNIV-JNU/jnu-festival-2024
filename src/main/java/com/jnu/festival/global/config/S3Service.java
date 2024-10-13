@@ -11,6 +11,8 @@ import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -40,6 +42,23 @@ public class S3Service {
                 .key(filename)
                 .build();
         return s3Client.utilities().getUrl(getUrlRequest).toString();
+    }
+
+    public List<String> uploadImages(List<MultipartFile> files, String directoryName) throws IOException{
+        if (files == null || files.isEmpty() || files.get(0).isEmpty()) {
+            return null;
+        }
+
+        List<String> urlList = new ArrayList<>();
+
+        for (MultipartFile image : files) {
+            // 이미지 파일을 S3에 저장하고 URL 반환
+            String url = upload(image, directoryName);
+            // 반환된 URL을 리스트에 추가
+            urlList.add(url);
+        }
+
+        return urlList;
     }
 
     public void delete(String url) throws IOException {
