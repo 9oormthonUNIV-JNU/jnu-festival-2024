@@ -69,7 +69,7 @@ public class UserService {
     public List<ContentBookmarkListDto> readContentBookmark(UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        List<Content> contents = contentBookmarkRepository.findAllByUser(user);
+        List<Content> contents = contentBookmarkRepository.findAllByUserAndIsDeleted(user);
         return contents.stream()
                 .map(content -> ContentBookmarkListDto.builder()
                         .id(content.getId())
