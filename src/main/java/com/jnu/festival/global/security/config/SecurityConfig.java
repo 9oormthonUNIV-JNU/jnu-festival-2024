@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/login",
+                                "/api/v1/zones/**",
                                 "/api/v1/partners/**",
                                 "/api/v1/contents/**").permitAll()
                         .anyRequest().authenticated()
