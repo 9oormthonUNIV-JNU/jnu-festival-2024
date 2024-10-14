@@ -10,6 +10,7 @@ import com.jnu.festival.global.security.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -56,6 +57,7 @@ public class SecurityConfig {
                                 "/api/v1/zones/**",
                                 "/api/v1/partners/**",
                                 "/api/v1/contents/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/timecapsules").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
