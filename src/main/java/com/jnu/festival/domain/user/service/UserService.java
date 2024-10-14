@@ -53,7 +53,7 @@ public class UserService {
     public List<PartnerBookmarkListDto> readPartnerBookmark(UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        List<Partner> partners = partnerBookmarkRepository.findAllByUser(user);
+        List<Partner> partners = partnerBookmarkRepository.findAllByUserAndIsDeleted(user);
         return partners.stream()
                 .map(partner -> PartnerBookmarkListDto.builder()
                         .id(partner.getId())
