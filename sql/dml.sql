@@ -62,7 +62,7 @@ VALUES ('Content 4', 'Description for content 4', '2024-10-10 10:15:00', '2024-1
 INSERT INTO content (title, description, created_at, modified_at)
 VALUES ('Content 5', 'Description for content 5', '2024-10-10 10:20:00', '2024-10-10 10:20:00');
 
--- partner_image
+-- content_image
 INSERT INTO content_image (content_id, url)
 VALUES (1, 'http://example.com/images/content1_img1.jpg');
 
