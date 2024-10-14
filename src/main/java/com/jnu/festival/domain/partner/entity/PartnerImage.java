@@ -1,6 +1,5 @@
 package com.jnu.festival.domain.partner.entity;
 
-import com.jnu.festival.domain.content.entity.Content;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

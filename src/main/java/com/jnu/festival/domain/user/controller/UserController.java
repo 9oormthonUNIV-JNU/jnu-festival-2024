@@ -29,14 +29,14 @@ public class UserController {
     }
 
     @GetMapping(value = "/bookmarks/partners")
-    public ResponseEntity<?> readPartnerBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        List<PartnerBookmarkListDto> response = userService.readPartnerBookmark(userDetails);
+    public ResponseEntity<?> readPartnerBookmarkList(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        List<PartnerBookmarkListDto> response = userService.readPartnerBookmarkList(userDetails);
         return ResponseEntity.ok(ResponseDto.ok(response));
     }
 
     @GetMapping(value = "/bookmarks/contents")
-    public ResponseEntity<?> readContentBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        List<ContentBookmarkListDto> response = userService.readContentBookmark(userDetails);
+    public ResponseEntity<?> readContentBookmarkList(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        List<ContentBookmarkListDto> response = userService.readContentBookmarkList(userDetails);
         return ResponseEntity.ok(ResponseDto.ok(response));
     }
 
