@@ -3,9 +3,11 @@ package com.jnu.festival.domain.bookmark.service;
 import com.jnu.festival.domain.bookmark.entity.ContentBookmark;
 import com.jnu.festival.domain.bookmark.entity.PartnerBookmark;
 import com.jnu.festival.domain.bookmark.repository.ContentBookmarkRepository;
+import com.jnu.festival.domain.bookmark.repository.PartnerBookmarkRepository;
 import com.jnu.festival.domain.content.entity.Content;
 import com.jnu.festival.domain.content.repository.ContentRepository;
 import com.jnu.festival.domain.partner.entity.Partner;
+import com.jnu.festival.domain.partner.repository.PartnerRepository;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
@@ -19,27 +21,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ContentBookmarkService {
+public class PartnerBookmarkService {
     private final UserRepository userRepository;
-    private final ContentRepository contentRepository;
-    private final ContentBookmarkRepository contentBookmarkRepository;
+    private final PartnerRepository partnerRepository;
+    private final PartnerBookmarkRepository partnerBookmarkRepository;
 
     @Transactional
-    public void createContentBookmark(Long contentId, UserDetailsImpl userDetails) {
+    public void createPartnerBookmark(Long partnerId, UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        Content content = contentRepository.findById(contentId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CONTENT));
+        Partner partner = partnerRepository.findById(partnerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PARTNER));
 
-        Optional<ContentBookmark> contentBookmark = contentBookmarkRepository.findByUserAndContent(user, content);
+        Optional<PartnerBookmark> partnerBookmark = partnerBookmarkRepository.findByUserAndPartner(user, partner);
 
-        if (contentBookmark.isPresent()) {
-            contentBookmark.get().updateIsDeleted();
+        if (partnerBookmark.isPresent()) {
+            partnerBookmark.get().updateIsDeleted();
         } else {
-            contentBookmarkRepository.save(
-                    ContentBookmark.builder()
+            partnerBookmarkRepository.save(
+                    PartnerBookmark.builder()
                             .user(user)
-                            .content(content)
+                            .partner(partner)
                             .isDeleted(false)
                             .build()
             );
@@ -47,13 +49,13 @@ public class ContentBookmarkService {
     }
 
     @Transactional
-    public void deleteContentBookmark(Long contentId, UserDetailsImpl userDetails) {
+    public void deletePartnerBookmark(Long partnerId, UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        Content content = contentRepository.findById(contentId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CONTENT));
-        ContentBookmark contentBookmark = contentBookmarkRepository.findByUserAndContent(user, content)
-                        .orElseThrow( () -> new BusinessException(ErrorCode.NOT_FOUND_CONTENTBOOKMARK));
-        contentBookmarkRepository.delete(contentBookmark);
+        Partner partner = partnerRepository.findById(partnerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PARTNER));
+        PartnerBookmark partnerBookmark = partnerBookmarkRepository.findByUserAndPartner(user, partner)
+                        .orElseThrow( () -> new BusinessException(ErrorCode.NOT_FOUND_PARTNERBOOKMARK));
+        partnerBookmarkRepository.delete(partnerBookmark);
     }
 }

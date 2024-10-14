@@ -1,6 +1,6 @@
 package com.jnu.festival.domain.bookmark.controller;
 
-import com.jnu.festival.domain.bookmark.service.BookmarkService;
+import com.jnu.festival.domain.bookmark.service.ContentBookmarkService;
 import com.jnu.festival.global.security.UserDetailsImpl;
 import com.jnu.festival.global.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -10,20 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/bookmarks")
-public class BookmarkController {
-    private final BookmarkService bookmarkService;
+@RequestMapping("/api/v1/bookmarks/contents")
+public class ContentBookmarkController {
+    private final ContentBookmarkService contentBookmarkService;
 
-    @PostMapping(value = "/contents/{contentId}")
+    @PostMapping(value = "/{contentId}")
     public ResponseEntity<?> createContentBookmark(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        bookmarkService.createContentBookmark(contentId, userDetails);
+        contentBookmarkService.createContentBookmark(contentId, userDetails);
         return ResponseEntity.ok(ResponseDto.ok(null));
     }
 
-    @DeleteMapping(value = "/contents/{contentId}")
+    @DeleteMapping(value = "/{contentId}")
     public ResponseEntity<?> deleteContentBookmark(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        System.out.println(contentId);
-        bookmarkService.deleteContentBookmark(contentId, userDetails);
+        contentBookmarkService.deleteContentBookmark(contentId, userDetails);
         return ResponseEntity.ok(ResponseDto.ok(null));
     }
 }

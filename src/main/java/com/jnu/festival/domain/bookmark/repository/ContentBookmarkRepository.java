@@ -16,7 +16,7 @@ public interface ContentBookmarkRepository extends JpaRepository<ContentBookmark
     List<Content> findAllByUserAndIsDeleted(User user);
 
     @Query("select cb.content from ContentBookmark as cb where cb.user = :user and cb.isDeleted = false")
-    Content findByUserAndIsDeleted(User user);
+    Optional<Content> findByUserAndIsDeleted(User user);
 
     @Query("select cb from ContentBookmark as cb where cb.user = :user and cb.content = :content")
     Optional<ContentBookmark> findByUserAndContent(User user, Content content);
