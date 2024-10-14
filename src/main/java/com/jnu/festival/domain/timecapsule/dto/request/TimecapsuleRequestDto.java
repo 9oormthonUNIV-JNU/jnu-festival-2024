@@ -1,8 +1,8 @@
-package com.jnu.festival.domain.timeCapsule.dto;
+package com.jnu.festival.domain.timecapsule.dto.request;
 
-public record TimeCapsuleRequestDto(
-        String mail_address,
+public record TimecapsuleRequestDto(
+        String mailAddress,
         String content,
-        boolean is_public
+        boolean isPublic
 ) {
 }

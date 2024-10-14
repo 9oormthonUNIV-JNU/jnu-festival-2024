@@ -1,4 +1,4 @@
-package com.jnu.festival.domain.timeCapsule.entity;
+package com.jnu.festival.domain.timecapsule.entity;
 
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.global.util.BaseTimeEntity;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "timecapsule")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class TimeCapsule extends BaseTimeEntity {
+public class Timecapsule extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +28,10 @@ public class TimeCapsule extends BaseTimeEntity {
     private String content;
 
     @Column(name = "is_public", nullable = false)
-    private boolean isPublic;
+    private Boolean isPublic;
 
     @Builder
-    public TimeCapsule(User user, String mailAddress, String content, boolean isPublic){
+    public Timecapsule(User user, String mailAddress, String content, Boolean isPublic) {
         this.user = user;
         this.mailAddress =  mailAddress;
         this.content = content;

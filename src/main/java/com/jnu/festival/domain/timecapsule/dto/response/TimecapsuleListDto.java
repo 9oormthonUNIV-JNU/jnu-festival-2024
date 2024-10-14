@@ -6,14 +6,13 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class TimecapsuleListResponseDto {
-    private final List<TimecapsuleResponseDto> my_timecapsules;
-    private final List<TimecapsuleResponseDto> timecapsules;
+public class TimecapsuleListDto {
+    private final List<TimecapsuleDto> myTimecapsules;
+    private final List<TimecapsuleDto> timecapsules;
 
     @Builder
-    public TimecapsuleListResponseDto(List<TimecapsuleResponseDto> my_timecapsules, List<TimecapsuleResponseDto> timecapsules){
-        this.my_timecapsules = my_timecapsules;
+    public TimecapsuleListDto(List<TimecapsuleDto> myTimecapsules, List<TimecapsuleDto> timecapsules) {
+        this.myTimecapsules = myTimecapsules;
         this.timecapsules = timecapsules;
     }
-
 }

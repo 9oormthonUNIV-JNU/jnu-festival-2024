@@ -1,12 +1,11 @@
-package com.jnu.festival.domain.timeCapsule.repository;
+package com.jnu.festival.domain.timecapsule.repository;
 
-import com.jnu.festival.domain.timeCapsule.entity.TimeCapsule;
-import com.jnu.festival.domain.timeCapsule.entity.TimeCapsuleImage;
+import com.jnu.festival.domain.timecapsule.entity.Timecapsule;
+import com.jnu.festival.domain.timecapsule.entity.TimecapsuleImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TimeCapsuleImageRepository extends JpaRepository<TimeCapsuleImage, Long> {
-
-    List<TimeCapsuleImage> findTimeCapsuleImagesByTimeCapsule(TimeCapsule timecapsule);
+public interface TimecapsuleImageRepository extends JpaRepository<TimecapsuleImage, Long> {
+    List<TimecapsuleImage> findAllByTimecapsule(Timecapsule timecapsule);
 }

@@ -1,12 +1,13 @@
-package com.jnu.festival.domain.timeCapsule.repository;
+package com.jnu.festival.domain.timecapsule.repository;
 
-import com.jnu.festival.domain.timeCapsule.entity.TimeCapsule;
+import com.jnu.festival.domain.timecapsule.entity.Timecapsule;
 import com.jnu.festival.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TimeCapsuleRepository extends JpaRepository<TimeCapsule, Long> {
-    List<TimeCapsule> findByUser(User user);
-    List<TimeCapsule> findByIsPublicTrueAndIdIsNot(User user);
+public interface TimecapsuleRepository extends JpaRepository<Timecapsule, Long> {
+    List<Timecapsule> findAllByUser(User user);
+
+    List<Timecapsule> findAllByIsPublicTrue();
 }

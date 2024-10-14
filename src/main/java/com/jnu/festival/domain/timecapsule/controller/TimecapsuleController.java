@@ -1,9 +1,9 @@
-package com.jnu.festival.domain.timeCapsule.controller;
+package com.jnu.festival.domain.timecapsule.controller;
 
-import com.jnu.festival.domain.timeCapsule.dto.TimeCapsuleRequestDto;
-import com.jnu.festival.domain.timeCapsule.dto.TimecapsuleListResponseDto;
-import com.jnu.festival.domain.timeCapsule.dto.TimecapsuleResponseDto;
-import com.jnu.festival.domain.timeCapsule.service.TimeCapsuleService;
+import com.jnu.festival.domain.timecapsule.dto.request.TimecapsuleRequestDto;
+import com.jnu.festival.domain.timecapsule.dto.response.TimecapsuleListDto;
+import com.jnu.festival.domain.timecapsule.dto.response.TimecapsuleDto;
+import com.jnu.festival.domain.timecapsule.service.TimecapsuleService;
 import com.jnu.festival.global.security.UserDetailsImpl;
 import com.jnu.festival.global.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -13,38 +13,29 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/timecapsules")
-public class TimeCapsuleController {
-    private final TimeCapsuleService timeCapsuleService;
+public class TimecapsuleController {
+    private final TimecapsuleService timecapsuleService;
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createTimeCapsule(@RequestPart TimeCapsuleRequestDto request, @RequestPart List<MultipartFile> images, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception{
-        timeCapsuleService.createTimeCapsule(request, images, userDetails);
-
-        return ResponseEntity.ok().body(ResponseDto.created(null));
-    }
-
-    @DeleteMapping(value = "/{timecapsuleId}")
-    public ResponseEntity<?> deleteTimeCapsule(@PathVariable Long timecapsuleId, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        timeCapsuleService.deleteTimeCapsule(timecapsuleId, userDetails);
-
-        return ResponseEntity.ok().body(ResponseDto.created(null));
+    public ResponseEntity<?> createTimecapsule(@RequestPart TimecapsuleRequestDto request, @RequestPart(required = false) List<MultipartFile> images, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        timecapsuleService.createTimecapsule(request, images, userDetails);
+        return ResponseEntity.ok(ResponseDto.created(null));
     }
 
     @GetMapping(value = "")
-    public ResponseEntity<?> getTimecapsules(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception{
-
-        List<TimecapsuleResponseDto> my_timecapsules = timeCapsuleService.getMytimecapsules(userDetails);
-        List<TimecapsuleResponseDto> timecapsules = timeCapsuleService.getTimecapsules(userDetails);
-        TimecapsuleListResponseDto response = timeCapsuleService.mapResponses(my_timecapsules, timecapsules);
-
-        return ResponseEntity.ok().body(ResponseDto.ok(response));
+    public ResponseEntity<?> getTimecapsuleList(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        TimecapsuleListDto response = timecapsuleService.getTimecapsuleList(userDetails);
+        return ResponseEntity.ok(ResponseDto.ok(response));
     }
 
-
+    @DeleteMapping(value = "/{timecapsuleId}")
+    public ResponseEntity<?> deleteTimecapsule(@PathVariable Long timecapsuleId, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        timecapsuleService.deleteTimecapsule(timecapsuleId, userDetails);
+        return ResponseEntity.ok(ResponseDto.created(null));
+    }
 }
