@@ -48,8 +48,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 //            return;
 //        }
 
-        System.out.println(unpreparedToken);
-
         if (unpreparedToken == null || !unpreparedToken.startsWith("Bearer ")) {
             throw new BusinessException(ErrorCode.INVALID_HEADER_ERROR);
         }

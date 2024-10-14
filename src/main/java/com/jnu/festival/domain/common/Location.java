@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Location {
+    STADIUM("stadium"),
     SQUARE_518("square-518"),
     BACKGATE_STREET("backgate-street");
 

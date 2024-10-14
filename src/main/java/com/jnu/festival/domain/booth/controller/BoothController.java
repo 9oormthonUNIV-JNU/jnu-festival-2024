@@ -1,5 +1,17 @@
 package com.jnu.festival.domain.booth.controller;
 
+import com.jnu.festival.domain.booth.dto.BoothResponseDTO;
+import com.jnu.festival.domain.booth.service.BoothService;
+import com.jnu.festival.global.util.ResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import com.jnu.festival.domain.bookmark.dto.response.BoothBookmarkListDto;
 import com.jnu.festival.domain.bookmark.dto.response.ContentBookmarkListDto;
@@ -26,9 +38,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/booths")
 public class BoothController {
-
     private final BoothService boothService;
-
     private final CommentService commentService;
 
     @GetMapping("")
@@ -44,8 +54,7 @@ public class BoothController {
         BoothResponseDTO.BoothDetailDTO responseDTO = boothService.getBoothDetail(boothId);
         return ResponseEntity.ok(ResponseDto.ok(responseDTO));
     }
-
-
+  
     @PostMapping(value = "/{boothId}/comments")
     public ResponseEntity<?> createComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long boothId, @RequestBody CommentRequestDto dto) throws Exception {
 
@@ -69,4 +78,3 @@ public class BoothController {
 
 
 }
-

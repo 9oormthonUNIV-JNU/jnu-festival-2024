@@ -24,6 +24,7 @@ public enum ErrorCode {
     NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다"),
     NOT_FOUND_CONTENT(HttpStatus.NOT_FOUND, "존재하지 않는 컨텐츠입니다."),
     NOT_FOUND_CONTENTBOOKMARK(HttpStatus.NOT_FOUND, "존재하지 않는 컨텐츠 북마크입니다."),
+    NOT_FOUND_TIMECAPSULE(HttpStatus.NOT_FOUND, "존재하지 않는 타임캡슐입니다."),
 
 
     // Invalid Argument Error

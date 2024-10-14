@@ -4,7 +4,6 @@ package com.jnu.festival.domain.booth.service;
 import com.jnu.festival.domain.booth.entity.Booth;
 import com.jnu.festival.domain.booth.dto.BoothResponseDTO;
 import com.jnu.festival.domain.booth.repository.BoothJPARepository;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,6 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 public class BoothService {
-
-
     private final BoothJPARepository boothJPARepository;
 
     //카테고리별 부스 목록 조회

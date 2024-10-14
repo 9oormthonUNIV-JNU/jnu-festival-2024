@@ -45,11 +45,13 @@ public class FeedbackService {
                         .build()
         );
 
-        String url = s3Service.upload(image, "feedback");
-        FeedbackImage feedbackImage = FeedbackImage.builder()
-                .feedback(feedback)
-                .url(url)
-                .build();
-        feedbackImageRepository.save(feedbackImage);
+        if (image != null) {
+            String url = s3Service.upload(image, "feedback");
+            FeedbackImage feedbackImage = FeedbackImage.builder()
+                    .feedback(feedback)
+                    .url(url)
+                    .build();
+            feedbackImageRepository.save(feedbackImage);
+        }
     }
 }

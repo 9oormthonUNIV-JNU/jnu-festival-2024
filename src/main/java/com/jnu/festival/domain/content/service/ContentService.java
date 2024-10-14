@@ -1,6 +1,5 @@
 package com.jnu.festival.domain.content.service;
 
-import com.jnu.festival.domain.bookmark.entity.ContentBookmark;
 import com.jnu.festival.domain.bookmark.repository.ContentBookmarkRepository;
 import com.jnu.festival.domain.content.dto.ContentDto;
 import com.jnu.festival.domain.content.dto.ContentListDto;
@@ -62,16 +61,18 @@ public class ContentService {
         List<String> contentImages = contentImageRepository.findAllByContent(content).stream()
                 .map(ContentImage::getUrl)
                 .toList();
+
         if (userDetails != null) {
             User user = userRepository.findByNickname(userDetails.getUsername())
                     .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-            Long contentBookmarkId = contentBookmarkRepository.findByUserAndIsDeleted(user).getId();
+            Long contentBookmarkId = contentBookmarkRepository.findByUserAndIsDeleted(user)
+                    .map(Content::getId).orElse(null);
             return ContentDto.builder()
                     .id(content.getId())
                     .title(content.getTitle())
                     .description(content.getDescription())
                     .images(contentImages)
-                    .bookmark(contentBookmarkId.equals(content.getId()))
+                    .bookmark(content.getId().equals(contentBookmarkId))
                     .createdAt(content.getCreatedAt())
                     .build();
         }
