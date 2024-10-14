@@ -1,13 +1,18 @@
-package com.jnu.festival.domain.zone.dto;
+package com.jnu.festival.domain.zone.dto.response;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Builder;
+import lombok.Getter;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record ZoneRequestDto(
-        Long id,
-        String title,
-        Location location,
-        String description
-) {
+@Getter
+public class ZoneListDto {
+    private final Long id;
+    private final String name;
+    private final String description;
+
+    @Builder
+    public ZoneListDto(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

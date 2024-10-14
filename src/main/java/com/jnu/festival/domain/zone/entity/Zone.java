@@ -1,6 +1,7 @@
-package com.jnu.festival.domain.zone.Entity;
+package com.jnu.festival.domain.zone.entity;
 
-import com.jnu.festival.domain.partner.entity.BaseTimeEntity;
+import com.jnu.festival.domain.common.Location;
+import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,22 +17,20 @@ public class Zone extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "location", nullable = false)
     @Enumerated(EnumType.STRING)
     private Location location;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Builder
-    public Zone(String title,Location location,String description){
-        this.title = title;
+    public Zone(String name, Location location, String description) {
+        this.name = name;
         this.location = location;
         this.description = description;
     }
-
-
 }
