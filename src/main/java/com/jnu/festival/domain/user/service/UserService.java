@@ -3,7 +3,6 @@ package com.jnu.festival.domain.user.service;
 import com.jnu.festival.domain.bookmark.dto.response.BoothBookmarkListDto;
 import com.jnu.festival.domain.bookmark.dto.response.ContentBookmarkListDto;
 import com.jnu.festival.domain.bookmark.dto.response.PartnerBookmarkListDto;
-import com.jnu.festival.domain.bookmark.entity.PartnerBookmark;
 import com.jnu.festival.domain.bookmark.repository.BoothBookmarkRepository;
 import com.jnu.festival.domain.bookmark.repository.ContentBookmarkRepository;
 import com.jnu.festival.domain.bookmark.repository.PartnerBookmarkRepository;
@@ -22,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +48,7 @@ public class UserService {
                 .build();
     }
 
-    public List<PartnerBookmarkListDto> readPartnerBookmark(UserDetailsImpl userDetails) {
+    public List<PartnerBookmarkListDto> readPartnerBookmarkList(UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
         List<Partner> partners = partnerBookmarkRepository.findAllByUserAndIsDeleted(user);
@@ -62,11 +60,9 @@ public class UserService {
                         .bookmark(true)
                         .createdAt(partner.getCreatedAt())
                         .build()).toList();
-
-
     }
 
-    public List<ContentBookmarkListDto> readContentBookmark(UserDetailsImpl userDetails) {
+    public List<ContentBookmarkListDto> readContentBookmarkList(UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
         List<Content> contents = contentBookmarkRepository.findAllByUserAndIsDeleted(user);
