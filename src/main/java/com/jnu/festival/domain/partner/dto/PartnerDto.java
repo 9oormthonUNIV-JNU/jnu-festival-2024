@@ -9,15 +9,15 @@ import java.util.List;
 
 @Getter
 public class PartnerDto {
-    private Long id;
-    private String name;
-    private String description;
-    private List<String> images;
-    private String location;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Boolean bookmark;
-    private LocalDateTime createdAt;
+    private final Long id;
+    private final String name;
+    private final String description;
+    private final List<String> images;
+    private final String location;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final Boolean bookmark;
+    private final LocalDateTime createdAt;
 
     @Builder
     public PartnerDto(Long id, String name, String description, List<String> images, String location, LocalDate startDate, LocalDate endDate, Boolean bookmark, LocalDateTime createdAt) {
