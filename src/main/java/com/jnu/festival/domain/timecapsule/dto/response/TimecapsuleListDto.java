@@ -1,4 +1,4 @@
-package com.jnu.festival.domain.timeCapsule.dto;
+package com.jnu.festival.domain.timecapsule.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

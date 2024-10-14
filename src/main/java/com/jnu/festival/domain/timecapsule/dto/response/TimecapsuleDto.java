@@ -1,6 +1,5 @@
-package com.jnu.festival.domain.timeCapsule.dto;
+package com.jnu.festival.domain.timecapsule.dto.response;
 
-import com.jnu.festival.domain.timeCapsule.entity.TimeCapsuleImage;
 import lombok.Builder;
 import lombok.Getter;
 
