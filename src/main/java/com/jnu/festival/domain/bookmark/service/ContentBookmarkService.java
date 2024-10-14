@@ -1,9 +1,11 @@
 package com.jnu.festival.domain.bookmark.service;
 
 import com.jnu.festival.domain.bookmark.entity.ContentBookmark;
+import com.jnu.festival.domain.bookmark.entity.PartnerBookmark;
 import com.jnu.festival.domain.bookmark.repository.ContentBookmarkRepository;
 import com.jnu.festival.domain.content.entity.Content;
 import com.jnu.festival.domain.content.repository.ContentRepository;
+import com.jnu.festival.domain.partner.entity.Partner;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
@@ -53,5 +55,39 @@ public class BookmarkService {
         ContentBookmark contentBookmark = contentBookmarkRepository.findByUserAndContent(user, content)
                         .orElseThrow( () -> new BusinessException(ErrorCode.NOT_FOUND_CONTENTBOOKMARK));
         contentBookmarkRepository.delete(contentBookmark);
+    }
+
+    //제휴업체 즐겨찾기
+    @Transactional
+    public void createPartnerBookmark(Long partnerId, UserDetailsImpl userDetails) {
+        User user = userRepository.findByNickname(userDetails.getUsername())
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+        Partner partner = partnerJPARepository.findById(partnerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PARTNER));
+
+        Optional<PartnerBookmark> partnerBookmark = partnerBookmarkRepository.findByUserAndPartner(user, partner);
+
+        if (partnerBookmark.isPresent()) {
+            partnerBookmark.get().updateIsDeleted();
+        } else {
+            partnerBookmarkRepository.save(
+                    PartnerBookmark.builder()
+                            .user(user)
+                            .partner(partner)
+                            .isDeleted(false)
+                            .build()
+            );
+        }
+    }
+
+    @Transactional
+    public void deletePartnerBookmark(Long partnerId, UserDetailsImpl userDetails) {
+        User user = userRepository.findByNickname(userDetails.getUsername())
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+        Partner partner = partnerJPARepository.findById(partnerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PARTNER));
+        PartnerBookmark partnerBookmark = partnerBookmarkRepository.findByUserAndPartner(user, partner)
+                .orElseThrow( () -> new BusinessException(ErrorCode.NOT_FOUND_PARTNERBOOKMARK));
+        partnerBookmarkRepository.delete(partnerBookmark);
     }
 }
