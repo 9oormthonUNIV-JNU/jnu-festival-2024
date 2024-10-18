@@ -65,7 +65,7 @@ public class ContentService {
         if (userDetails != null) {
             User user = userRepository.findByNickname(userDetails.getUsername())
                     .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-            Long contentBookmarkId = contentBookmarkRepository.findByUserAndIsDeleted(user)
+            Long contentBookmarkId = contentBookmarkRepository.findByUserAndContentAndIsDeleted(user, content)
                     .map(Content::getId).orElse(null);
             return ContentDto.builder()
                     .id(content.getId())
