@@ -1,5 +1,6 @@
-package com.jnu.festival.domain.booth.entity;
+package com.jnu.festival.domain.comment.entity;
 
+import com.jnu.festival.domain.booth.entity.Booth;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "content", nullable = false)
     String content;
 
     @Builder

@@ -4,20 +4,20 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
-public class CommentResponseDto {
+public class CommentDto {
     private final Long id;
-    private final String name;
+    private final String nickname;
     private final String content;
-    private final LocalDate created_at;
+    private final LocalDateTime createdAt;
 
     @Builder
-    public CommentResponseDto(Long id, String name, String content, LocalDate created_at){
+    public CommentDto(Long id, String nickname, String content, LocalDateTime createdAt) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
         this.content = content;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
-
 }

@@ -6,12 +6,12 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class CommentListResponseDto {
-    private final List<CommentResponseDto> comments;
-    private final int commentCount;
+public class CommentListDto {
+    private final List<CommentDto> comments;
+    private final Integer commentCount;
 
     @Builder
-    public CommentListResponseDto(List<CommentResponseDto> comments, int commentCount){
+    public CommentListDto(List<CommentDto> comments, Integer commentCount) {
         this.comments = comments;
         this.commentCount = commentCount;
     }
