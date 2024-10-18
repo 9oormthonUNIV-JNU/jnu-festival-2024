@@ -14,9 +14,16 @@ import java.util.Optional;
 
 @Repository
 public interface BoothBookmarkRepository extends JpaRepository<BoothBookmark, Long> {
+
+    @Query("select bb.booth from BoothBookmark as bb where bb.user = :user and bb.isDeleted = false")
+    List<Booth> findAllByUserAndIsDeleted(User user);
+
+    @Query("select bb.booth from BoothBookmark as bb where bb.user = :user and bb.booth = :booth and bb.isDeleted = false")
+    Optional<Booth> findByUserAndBoothAndIsDeleted(User user, Booth booth);
+
     @Query("select bb.booth from BoothBookmark as bb where bb.user = :user")
     List<Booth> findAllByUser(User user);
 
-    @Query("select bb from BoothBookmark bb where bb.user.id = :userId and bb.booth.id = :boothId")
-    Optional<BoothBookmark> findByUserAndBooth(Long userId, Long boothId);
+    @Query("select bb from BoothBookmark as bb where bb.user = :user and bb.booth = :booth")
+    Optional<BoothBookmark> findByUserAndBooth(User user, Booth booth);
 }

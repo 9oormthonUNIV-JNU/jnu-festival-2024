@@ -1,13 +1,12 @@
 package com.jnu.festival.domain.booth.service;
 
-import com.jnu.festival.domain.booth.dto.CommentListResponseDto;
-import com.jnu.festival.domain.booth.dto.CommentRequestDto;
-import com.jnu.festival.domain.booth.dto.CommentResponseDto;
+import com.jnu.festival.domain.booth.dto.response.CommentListResponseDto;
+import com.jnu.festival.domain.booth.dto.request.CommentRequestDto;
+import com.jnu.festival.domain.booth.dto.response.CommentResponseDto;
 import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.booth.entity.Comment;
+import com.jnu.festival.domain.comment.entity.Comment;
 import com.jnu.festival.domain.booth.repository.BoothJPARepository;
-import com.jnu.festival.domain.booth.repository.BoothRepository;
-import com.jnu.festival.domain.booth.repository.CommentRepository;
+import com.jnu.festival.domain.comment.repository.CommentRepository;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;

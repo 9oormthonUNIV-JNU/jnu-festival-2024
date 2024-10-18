@@ -1,7 +1,7 @@
 package com.jnu.festival.domain.booth.repository;
 
 import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.booth.entity.Comment;
+import com.jnu.festival.domain.comment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -29,10 +29,10 @@ public class PartnerBookmark {
     private Partner partner;
 
     @Column(name="is_deleted",nullable = false)
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @Builder
-    public PartnerBookmark(User user, Partner partner, boolean isDeleted) {
+    public PartnerBookmark(User user, Partner partner, Boolean isDeleted) {
         this.user = user;
         this.partner = partner;
         this.isDeleted = isDeleted;

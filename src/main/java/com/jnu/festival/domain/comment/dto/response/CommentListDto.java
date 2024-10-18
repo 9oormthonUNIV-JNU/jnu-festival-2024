@@ -1,4 +1,4 @@
-package com.jnu.festival.domain.booth.dto;
+package com.jnu.festival.domain.comment.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
