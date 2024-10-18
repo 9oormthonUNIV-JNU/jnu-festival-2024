@@ -3,39 +3,40 @@ package com.jnu.festival.domain.like.entity;
 
 import com.jnu.festival.domain.booth.entity.Booth;
 import com.jnu.festival.domain.user.entity.User;
-import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "likes")
-public class Like extends BaseTimeEntity {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "update likes set is_deleted = true where id = ?")
+@Getter
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne  //(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne  //(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
-    @Column(nullable = false)
-    private boolean isDeleted = false;
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted;
 
     @Builder
-    public Like(User user, Booth booth, boolean isDeleted) {
+    public Like(Long id, User user, Booth booth, Boolean isDeleted) {
+        this.id = id;
         this.user = user;
         this.booth = booth;
         this.isDeleted = isDeleted;
     }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void updateIsDeleted() {
+        this.isDeleted = Boolean.FALSE;
     }
 }
