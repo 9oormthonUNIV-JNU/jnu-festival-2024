@@ -56,7 +56,6 @@ public class PartnerService {
                         .createdAt(partner.getCreatedAt())
                         .build())
                 .toList();
-
     }
 
     //파트너 상세 조회
@@ -70,7 +69,7 @@ public class PartnerService {
         if (userDetails != null) {
             User user = userRepository.findByNickname(userDetails.getUsername())
                     .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-            Long partnerBookmarkId = partnerBookmarkRepository.findByUserAndIsDeleted(user)
+            Long partnerBookmarkId = partnerBookmarkRepository.findByUserAndPartnerAndIsDeleted(user, partner)
                     .map(Partner::getId).orElse(null);
             return PartnerDto.builder()
                     .id(partner.getId())
