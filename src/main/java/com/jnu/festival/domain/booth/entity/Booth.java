@@ -26,6 +26,7 @@ public class Booth extends BaseTimeEntity {
     private String name;
 
     @Column(name = "location", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Location location;
 
     @Column(name = "index", nullable = false)
@@ -47,9 +48,11 @@ public class Booth extends BaseTimeEntity {
     private String description;
 
     @Column(name = "category", nullable = false)
+    @Enumerated(EnumType.STRING)
     private BoothCategory category;
 
     @Column(name = "period", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Period period;
 
     @Column(name = "image", nullable = false)
