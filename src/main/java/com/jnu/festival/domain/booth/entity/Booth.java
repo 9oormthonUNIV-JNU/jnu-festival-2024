@@ -55,13 +55,10 @@ public class Booth extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Period period;
 
-    @Column(name = "image", nullable = false)
-    private String image;
-
     @Builder
     public Booth(String name, Location location, Integer index,
                  LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime,
-                 String description, BoothCategory category, Period period, String image) {
+                 String description, BoothCategory category, Period period) {
         this.name = name;
         this.location = location;
         this.index = index;
@@ -72,6 +69,5 @@ public class Booth extends BaseTimeEntity {
         this.description = description;
         this.category = category;
         this.period = period;
-        this.image = image;
     }
 }
