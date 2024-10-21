@@ -79,20 +79,20 @@ INSERT INTO content_image (content_id, url)
 VALUES (4, 'http://example.com/images/content4_img1.jpg');
 
 -- booth
-INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, image, created_at, modified_at)
-VALUES ('Booth A', 'STADIUM', 1, '2024-01-01', '2024-01-05', '10:00', '18:00', 'Food booth near the stadium', 'FOOD', 'DAYTIME', 'imageA.jpg', NOW(), NOW());
+INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, created_at, modified_at)
+VALUES ('Booth A', 'STADIUM', 1, '2024-01-01', '2024-01-05', '10:00', '18:00', 'Food booth near the stadium', 'FOOD', 'DAYTIME', NOW(), NOW());
 
-INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, image, created_at, modified_at)
-VALUES ('Booth B', 'SQUARE_518', 2, '2024-02-01', '2024-02-03', '11:00', '19:00', 'Promotional booth at 518 Square', 'PROMOTION', 'DAYTIME', 'imageB.jpg', NOW(), NOW());
+INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, created_at, modified_at)
+VALUES ('Booth B', 'SQUARE_518', 2, '2024-02-01', '2024-02-03', '11:00', '19:00', 'Promotional booth at 518 Square', 'PROMOTION', 'DAYTIME', NOW(), NOW());
 
-INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, image, created_at, modified_at)
-VALUES ('Booth C', 'BACKGATE_STREET', 3, '2024-03-01', '2024-03-02', '12:00', '20:00', 'Experience booth on Backgate Street', 'EXPERIENCE', 'NIGHTTIME', 'imageC.jpg', NOW(), NOW());
+INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, created_at, modified_at)
+VALUES ('Booth C', 'BACKGATE_STREET', 3, '2024-03-01', '2024-03-02', '12:00', '20:00', 'Experience booth on Backgate Street', 'EXPERIENCE', 'NIGHTTIME', NOW(), NOW());
 
-INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, image, created_at, modified_at)
-VALUES ('Booth D', 'STADIUM', 4, '2024-04-01', '2024-04-07', '09:00', '17:00', 'Flea market near the stadium', 'FLEA_MARKET', 'ALLTIME', 'imageD.jpg', NOW(), NOW());
+INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, created_at, modified_at)
+VALUES ('Booth D', 'STADIUM', 4, '2024-04-01', '2024-04-07', '09:00', '17:00', 'Flea market near the stadium', 'FLEA_MARKET', 'ALLTIME', NOW(), NOW());
 
-INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, image, created_at, modified_at)
-VALUES ('Booth E', 'SQUARE_518', 5, '2024-05-01', '2024-05-05', '10:00', '22:00', 'Miscellaneous items booth', 'ETC', 'ALLTIME', 'imageE.jpg', NOW(), NOW());
+INSERT INTO booth (name, location, index, start_date, end_date, start_time, end_time, description, category, period, created_at, modified_at)
+VALUES ('Booth E', 'SQUARE_518', 5, '2024-05-01', '2024-05-05', '10:00', '22:00', 'Miscellaneous items booth', 'ETC', 'ALLTIME',  NOW(), NOW());
 
 -- booth_image
 INSERT INTO booth_image (booth_id, url)
