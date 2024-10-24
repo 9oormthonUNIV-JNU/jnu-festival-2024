@@ -1,5 +1,6 @@
 package com.jnu.festival.domain.booth.dto;
 
+import com.jnu.festival.domain.booth.entity.BoothCategory;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class BoothDto {
     private final String name;
     private final String location;
     private final Integer index;
+    private final BoothCategory boothCategory;
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final LocalTime startTime;
@@ -24,7 +26,7 @@ public class BoothDto {
     private final List<String> images;
 
     @Builder
-    public BoothDto(Long id, String name, String location, Integer index,
+    public BoothDto(Long id, String name, String location, Integer index, BoothCategory boothCategory,
                     LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime,
                     Boolean like, Long likeCount, Boolean bookmark,
                     String description, List<String> images) {
@@ -32,6 +34,7 @@ public class BoothDto {
         this.name = name;
         this.location = location;
         this.index = index;
+        this.boothCategory = boothCategory;
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
