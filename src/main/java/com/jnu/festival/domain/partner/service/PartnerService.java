@@ -12,12 +12,10 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.UserDetailsImpl;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +54,6 @@ public class PartnerService {
                         .createdAt(partner.getCreatedAt())
                         .build())
                 .toList();
-
     }
 
     //파트너 상세 조회
@@ -70,7 +67,7 @@ public class PartnerService {
         if (userDetails != null) {
             User user = userRepository.findByNickname(userDetails.getUsername())
                     .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-            Long partnerBookmarkId = partnerBookmarkRepository.findByUserAndIsDeleted(user)
+            Long partnerBookmarkId = partnerBookmarkRepository.findByUserAndPartnerAndIsDeleted(user, partner)
                     .map(Partner::getId).orElse(null);
             return PartnerDto.builder()
                     .id(partner.getId())

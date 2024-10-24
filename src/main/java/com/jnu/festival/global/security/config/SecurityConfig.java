@@ -57,8 +57,10 @@ public class SecurityConfig {
                                 "/api/v1/zones/**",
                                 "/api/v1/partners/**",
                                 "/api/v1/contents/**",
-                                "/api/v1/booths/**").permitAll()
+                                "/api/v1/booths", "/api/v1/booths/{boothId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/timecapsules").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/booths/{boothId}/comments").permitAll()
+                        .requestMatchers("/api/v1/admins/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout

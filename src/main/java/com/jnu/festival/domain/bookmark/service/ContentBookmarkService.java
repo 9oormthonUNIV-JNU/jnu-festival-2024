@@ -34,15 +34,15 @@ public class ContentBookmarkService {
         Optional<ContentBookmark> contentBookmark = contentBookmarkRepository.findByUserAndContent(user, content);
 
         if (contentBookmark.isPresent()) {
-            contentBookmark.get().updateIsDeleted();
-        } else {
-            contentBookmarkRepository.save(
-                    ContentBookmark.builder()
-                            .user(user)
-                            .content(content)
-                            .isDeleted(false)
-                            .build()
-            );
+                contentBookmark.get().updateIsDeleted();
+            } else {
+                contentBookmarkRepository.save(
+                        ContentBookmark.builder()
+                                .user(user)
+                                .content(content)
+                                .isDeleted(false)
+                                .build()
+                );
         }
     }
 

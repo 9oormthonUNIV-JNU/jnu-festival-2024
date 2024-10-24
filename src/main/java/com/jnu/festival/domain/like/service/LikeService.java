@@ -1,11 +1,12 @@
 package com.jnu.festival.domain.like.service;
 
+import com.jnu.festival.domain.bookmark.entity.BoothBookmark;
 import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.booth.repository.BoothJPARepository;
-import com.jnu.festival.domain.like.dto.LikeResponseDTO;
+import com.jnu.festival.domain.booth.repository.BoothRepository;
+import com.jnu.festival.domain.like.dto.response.LikeDto;
 import com.jnu.festival.domain.like.entity.Like;
+import com.jnu.festival.domain.like.repository.LikeRepository;
 import com.jnu.festival.domain.user.entity.User;
-import com.jnu.festival.domain.like.repository.LikeJPARepository;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
@@ -14,54 +15,56 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 
-@RequiredArgsConstructor
-@Transactional
 @Service
+@RequiredArgsConstructor
 public class LikeService {
 
-    private final LikeJPARepository likeJPARepository;
+    private final LikeRepository likeRepository;
     private final UserRepository userRepository;
-    private final BoothJPARepository boothJPARepository;
+    private final BoothRepository boothJPARepository;
 
 
     //좋아요 등록
-    public void createBoothLike(UserDetailsImpl userDetails, Long boothId) throws Exception {
+    @Transactional
+    public LikeDto createLike(Long boothId, UserDetailsImpl userDetails) throws Exception {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-
         Booth booth = boothJPARepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
 
-        Like newLike = Like.builder()
-                .user(user)
-                .booth(booth).build();
+        Optional<Like> like = likeRepository.findByUserAndBooth(user, booth);
 
-        likeJPARepository.save(newLike);
+        if (like.isPresent()) {
+            like.get().updateIsDeleted();
+        } else {
+            likeRepository.save(
+                    Like.builder()
+                            .user(user)
+                            .booth(booth)
+                            .isDeleted(false)
+                            .build()
+            );
+        }
+
+        return LikeDto.builder()
+                .likeCount(likeRepository.countAllByBoothAndIsDeletedFalse(booth))
+                .build();
     }
 
     //좋아요 취소
-    public LikeResponseDTO updateboothlike(UserDetailsImpl userDetails, Long boothId, Long likeId) throws Exception {
-
+    public LikeDto deleteLike(Long boothId, UserDetailsImpl userDetails) throws Exception {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-
         Booth booth = boothJPARepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
-
-        Like like = likeJPARepository.findById(likeId)
+        Like like = likeRepository.findByUserAndBooth(user, booth)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_LIKE));
+        likeRepository.delete(like);
 
-        // 좋아요가 현재 로그인한 사용자와 해당 부스에 대한 것인지 확인
-        if (!like.getUser().getId().equals(user.getId()) || !like.getBooth().getId().equals(booth.getId())) {
-            throw new Exception("Unauthorized action");
-        }
-
-        // 좋아요 취소: is_deleted 필드를 true로 설정
-        like.setIsDeleted(true);
-        likeJPARepository.save(like);
-
-
-        return new LikeResponseDTO(like);
+        return LikeDto.builder()
+                .likeCount(likeRepository.countAllByBoothAndIsDeletedFalse(booth))
+                .build();
     }
 }

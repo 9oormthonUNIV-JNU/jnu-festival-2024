@@ -1,53 +1,70 @@
-package com.jnu.festival.domain.booth.service;
+package com.jnu.festival.domain.comment.service;
 
-import com.jnu.festival.domain.booth.dto.CommentListResponseDto;
-import com.jnu.festival.domain.booth.dto.CommentRequestDto;
-import com.jnu.festival.domain.booth.dto.CommentResponseDto;
 import com.jnu.festival.domain.booth.entity.Booth;
-import com.jnu.festival.domain.booth.entity.Comment;
-import com.jnu.festival.domain.booth.repository.BoothJPARepository;
 import com.jnu.festival.domain.booth.repository.BoothRepository;
-import com.jnu.festival.domain.booth.repository.CommentRepository;
+import com.jnu.festival.domain.comment.dto.request.CommentRequestDto;
+import com.jnu.festival.domain.comment.dto.response.CommentDto;
+import com.jnu.festival.domain.comment.dto.response.CommentListDto;
+import com.jnu.festival.domain.comment.entity.Comment;
+import com.jnu.festival.domain.comment.repository.CommentRepository;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.UserDetailsImpl;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
     private final UserRepository userRepository;
-    private final BoothJPARepository boothJPARepository;
+    private final BoothRepository boothRepository;
     private final CommentRepository commentRepository;
 
-    @Transactional
-    public void createComment(UserDetailsImpl userDetails, Long boothId, CommentRequestDto dto) {
-        User user = userRepository.findByNickname(userDetails.getUsername())
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        Booth booth = boothJPARepository.findById(boothId)
+    public CommentListDto readCommentList(Long boothId) {
+        Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
 
-        Comment comment = commentRepository.save(
+        List<CommentDto> commentDtos = commentRepository.findAllByBooth(booth).stream()
+                .map(comment -> CommentDto.builder()
+                        .id(comment.getId())
+                        .nickname(comment.getUser().getNickname())
+                        .content(comment.getContent())
+                        .createdAt(comment.getCreatedAt())
+                        .build())
+                .toList();
+
+        return CommentListDto.builder()
+                .comments(commentDtos)
+                .commentCount(commentDtos.size())
+                .build();
+    }
+
+    @Transactional
+    public void createComment(Long boothId, CommentRequestDto request, UserDetailsImpl userDetails) {
+        User user = userRepository.findByNickname(userDetails.getUsername())
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+        Booth booth = boothRepository.findById(boothId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
+
+        commentRepository.save(
                 Comment.builder()
                         .user(user)
                         .booth(booth)
-                        .content(dto.getContent())
+                        .content(request.content())
                         .build()
         );
     }
 
     @Transactional
-    public void deleteComment(UserDetailsImpl userDetails, Long boothId, Long commentId) {
+    public void deleteComment(Long boothId, Long commentId, UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        Booth booth = boothJPARepository.findById(boothId)
+        Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_COMMENT));
@@ -61,27 +78,7 @@ public class CommentService {
         if (!comment.getUser().getId().equals(user.getId())) {
             throw new BusinessException(ErrorCode.NOT_MATCH_USER);
         }
+
         commentRepository.delete(comment);
-    }
-
-    public CommentListResponseDto getComments(Long boothId) {
-
-        Booth booth = boothJPARepository.findById(boothId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
-
-        List<Comment> comments = commentRepository.findCommentsByBooth(booth);
-        List<CommentResponseDto> commentResponseDtoList = comments.stream()
-                .map(comment -> CommentResponseDto.builder()
-                        .id(comment.getId())
-                        .name(comment.getUser().getNickname())
-                        .content(comment.getContent())
-                        .created_at(comment.getCreatedAt().toLocalDate())
-                        .build())
-                .collect(Collectors.toList());
-
-        return CommentListResponseDto.builder()
-                .comments(commentResponseDtoList)
-                .commentCount(commentResponseDtoList.size())
-                .build();
     }
 }
