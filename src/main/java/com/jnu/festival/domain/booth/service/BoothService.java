@@ -28,11 +28,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoothService {
+
     private final BoothRepository boothRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
     private final BoothBookmarkRepository boothBookmarkRepository;
     private final BoothImageRepository boothImageRepository;
+
 
     //카테고리별 부스 목록 조회
     public List<BoothListDto> readBoothList(String location, String period, String category, UserDetailsImpl userDetails) {
@@ -99,6 +101,7 @@ public class BoothService {
                     .name(booth.getName())
                     .location(booth.getLocation().getValue())
                     .index(booth.getIndex())
+                    .boothCategory(booth.getCategory())
                     .startDate(booth.getStartDate())
                     .endDate(booth.getEndDate())
                     .startTime(booth.getStartTime())
@@ -115,6 +118,7 @@ public class BoothService {
                 .name(booth.getName())
                 .location(booth.getLocation().getValue())
                 .index(booth.getIndex())
+                .boothCategory(booth.getCategory())
                 .startDate(booth.getStartDate())
                 .endDate(booth.getEndDate())
                 .startTime(booth.getStartTime())

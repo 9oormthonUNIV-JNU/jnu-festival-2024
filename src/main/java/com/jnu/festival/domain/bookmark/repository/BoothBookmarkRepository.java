@@ -31,4 +31,5 @@ public interface BoothBookmarkRepository extends JpaRepository<BoothBookmark, Lo
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("delete from BoothBookmark as bb where bb.booth = :booth")
     void deleteAllByBooth(Booth booth);
+
 }

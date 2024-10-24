@@ -15,10 +15,12 @@ public enum ErrorCode {
     NOT_FOUND_RESOURCE(HttpStatus.NOT_FOUND, "해당 리소스가 존재하지 않습니다."),
     NOT_FOUND_AUTHORIZATION_HEADER(HttpStatus.NOT_FOUND, "Authorization 헤더가 존재하지 않습니다."),
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
+
     NOT_FOUND_ZONE(HttpStatus.NOT_FOUND, "존재하지 않는 zone입니다."),
     NOT_FOUND_LIKE(HttpStatus.NOT_FOUND, "존재하지 않는 좋아요입니다."),
     NOT_FOUND_PARTNER(HttpStatus.NOT_FOUND, "존재하지 않는 제휴업체입니다."),
     NOT_FOUND_PARTNERBOOKMARK(HttpStatus.NOT_FOUND, "존재하지 않는 제휴업체 북마크입니다."),
+
     NOT_FOUND_BOOTH(HttpStatus.NOT_FOUND, "존재하지 않는 부스입니다."),
     NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다"),
     NOT_FOUND_BOOTHBOOKMARK(HttpStatus.NOT_FOUND, "존재하지 않는 부스 북마크입니다."),
