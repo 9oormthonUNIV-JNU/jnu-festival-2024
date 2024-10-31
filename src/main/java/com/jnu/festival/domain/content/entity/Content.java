@@ -19,8 +19,9 @@ public class Content extends BaseTimeEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
+
 
     @Builder
     public Content(String title, String description) {

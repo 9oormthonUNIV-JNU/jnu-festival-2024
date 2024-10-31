@@ -8,9 +8,11 @@ import com.jnu.festival.domain.admin.dto.response.FeedbackDto;
 import com.jnu.festival.domain.admin.dto.response.FeedbackListDto;
 import com.jnu.festival.domain.admin.service.AdminService;
 import com.jnu.festival.global.util.ResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +25,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(value = "/zones")
-    public ResponseEntity<?> createZone(@RequestBody ZoneRequestDto request) throws Exception {
+    public ResponseEntity<?> createZone(@Valid @RequestBody ZoneRequestDto request) throws Exception {
         adminService.createZone(request);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
@@ -35,7 +37,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/partners", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createPartner(@RequestPart PartnerRequestDto request, @RequestPart(required = false)List<MultipartFile> images) throws Exception {
+    public ResponseEntity<?> createPartner(@Valid @RequestPart PartnerRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
         adminService.createPartner(request, images);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
@@ -47,7 +49,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/contents", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createContent(@RequestPart ContentRequestDto request, @RequestPart(required = false)List<MultipartFile> images) throws Exception {
+    public ResponseEntity<?> createContent(@Valid @RequestPart ContentRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
         adminService.createContent(request, images);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
@@ -59,7 +61,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/booths", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createBooth(@RequestPart BoothRequestDto request, @RequestPart(required = false)List<MultipartFile> images) throws Exception {
+    public ResponseEntity<?> createBooth(@Valid @RequestPart BoothRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
         adminService.createBooth(request, images);
         return ResponseEntity.ok(ResponseDto.created(null));
     }

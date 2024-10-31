@@ -24,7 +24,7 @@ public class Timecapsule extends BaseTimeEntity {
     @Column(name = "mail_address", nullable = false)
     private String mailAddress;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
 
     @Column(name = "is_public", nullable = false)
@@ -33,7 +33,7 @@ public class Timecapsule extends BaseTimeEntity {
     @Builder
     public Timecapsule(User user, String mailAddress, String content, Boolean isPublic) {
         this.user = user;
-        this.mailAddress =  mailAddress;
+        this.mailAddress = mailAddress;
         this.content = content;
         this.isPublic = isPublic;
     }

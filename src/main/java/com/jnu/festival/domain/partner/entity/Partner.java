@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.jnu.festival.global.util.BaseTimeEntity;
+
 import java.time.LocalDate;
 
 @Entity
@@ -29,7 +30,7 @@ public class Partner extends BaseTimeEntity {
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
     @Builder

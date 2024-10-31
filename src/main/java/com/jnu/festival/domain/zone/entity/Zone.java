@@ -24,7 +24,7 @@ public class Zone extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Location location;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
     @Builder

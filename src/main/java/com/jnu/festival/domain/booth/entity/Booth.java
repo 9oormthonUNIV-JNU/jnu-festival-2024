@@ -44,7 +44,7 @@ public class Booth extends BaseTimeEntity {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
     @Column(name = "category", nullable = false)

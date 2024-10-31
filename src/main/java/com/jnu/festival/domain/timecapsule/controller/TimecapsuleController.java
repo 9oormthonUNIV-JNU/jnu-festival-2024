@@ -6,6 +6,7 @@ import com.jnu.festival.domain.timecapsule.dto.response.TimecapsuleDto;
 import com.jnu.festival.domain.timecapsule.service.TimecapsuleService;
 import com.jnu.festival.global.security.UserDetailsImpl;
 import com.jnu.festival.global.util.ResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class TimecapsuleController {
     private final TimecapsuleService timecapsuleService;
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createTimecapsule(@RequestPart TimecapsuleRequestDto request, @RequestPart(required = false) List<MultipartFile> images, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+    public ResponseEntity<?> createTimecapsule(@Valid @RequestPart TimecapsuleRequestDto request, @RequestPart(required = false) List<MultipartFile> images, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
         timecapsuleService.createTimecapsule(request, images, userDetails);
         return ResponseEntity.ok(ResponseDto.created(null));
     }

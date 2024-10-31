@@ -23,14 +23,14 @@ public class Feedback extends BaseTimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 30)
     private String title;
 
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private FeedbackCategory category;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
 
     @Builder
