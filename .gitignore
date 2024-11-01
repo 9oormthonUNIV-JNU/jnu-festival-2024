@@ -48,3 +48,5 @@ out/
 
 /src/main/resources/application-test.yml
 /src/test/java/com/jnu/festival/api/domain/
+/src/test/java/com/jnu/festival/api/domain/
+/src/test/java/com/jnu/festival/api/domain/booth/
