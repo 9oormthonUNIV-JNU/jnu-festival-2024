@@ -50,3 +50,5 @@ out/
 /src/test/java/com/jnu/festival/api/domain/
 /src/test/java/com/jnu/festival/api/domain/
 /src/test/java/com/jnu/festival/api/domain/booth/
+/src/test/java/com/jnu/festival/api/domain/booth/repository
+/src/test/java/com/jnu/festival/api/domain/booth/service
