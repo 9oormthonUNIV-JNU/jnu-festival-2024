@@ -34,7 +34,9 @@ public class TimecapsuleService {
     public void createTimecapsule(TimecapsuleRequestDto request, List<MultipartFile> images, UserDetailsImpl userDetails) throws IOException {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-
+        if (request.mailAddress() == null || request.content() == null) {
+            throw new BusinessException(ErrorCode.INVALID_ARGUMENT);
+        }
         Timecapsule timecapsule = timecapsuleRepository.save(
                 Timecapsule.builder()
                         .user(user)
@@ -115,7 +117,7 @@ public class TimecapsuleService {
 
 
     @Transactional
-    public void deleteTimecapsule(Long timecapsuleId, UserDetailsImpl userDetails) throws IOException {
+    public void deleteTimecapsule(Long timecapsuleId, UserDetailsImpl userDetails) throws Exception {
         // 지우려는 사람의 정보를 가져옴.
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));

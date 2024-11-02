@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
 @ExtendWith(MockitoExtension.class)
+@EnableJpaAuditing
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class TimecapsuleRepositoryTest {
 
@@ -109,6 +111,7 @@ public class TimecapsuleRepositoryTest {
         // 먼저 ActualUser가 데이터베이스에 존재하는 실제 User인지 체크가 선행되어야함. -> UserRepository를 사용하고 싶진 않음.
         User savedUser = entityManager.persist(actualUser);
         Timecapsule timecapsule = new Timecapsule(savedUser, "test", null, true);
+
 
         //when
         //then
