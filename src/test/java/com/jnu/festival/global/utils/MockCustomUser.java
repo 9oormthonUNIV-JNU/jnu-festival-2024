@@ -1,4 +1,4 @@
-package com.jnu.festival.domain.timecapsule;
+package com.jnu.festival.global.utils;
 
 import com.jnu.festival.domain.user.entity.Role;
 import java.lang.annotation.Retention;
