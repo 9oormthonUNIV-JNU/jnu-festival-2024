@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class FeedbackService {
     private final FeedbackImageRepository feedbackImageRepository;
 
     @Transactional
-    public void createFeedback(FeedbackRequestDto request, MultipartFile image, UserDetailsImpl userDetails) throws IOException {
+    public void createFeedback(FeedbackRequestDto request, List<MultipartFile> images, UserDetailsImpl userDetails) throws IOException {
         if (!request.category().isEmpty() && FeedbackCategory.from(request.category()) == null) {
             throw new BusinessException(ErrorCode.INVALID_CATEGORY);
         }
@@ -45,13 +47,18 @@ public class FeedbackService {
                         .build()
         );
 
-        if (image != null) {
-            String url = s3Service.upload(image, "feedback");
-            FeedbackImage feedbackImage = FeedbackImage.builder()
-                    .feedback(feedback)
-                    .url(url)
-                    .build();
-            feedbackImageRepository.save(feedbackImage);
+        if (images != null) {
+            List<FeedbackImage> feedbackImages = new ArrayList<>();
+
+            for (MultipartFile image : images) {
+                String url = s3Service.upload(image, "feedback");
+                FeedbackImage feedbackImage = FeedbackImage.builder()
+                        .feedback(feedback)
+                        .url(url)
+                        .build();
+                feedbackImages.add(feedbackImage);
+            }
+            feedbackImageRepository.saveAll(feedbackImages);
         }
     }
 }

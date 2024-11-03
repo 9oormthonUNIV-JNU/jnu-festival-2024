@@ -13,6 +13,7 @@ import com.jnu.festival.global.config.S3Service;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -85,7 +86,7 @@ public class TimecapsuleService {
                         .nickname(user.getNickname())
                         .content(myTimecapsule.getContent())
                         .images(myTimecapsuleImages)
-                        .createdAt(myTimecapsule.getCreatedAt())
+                        .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(myTimecapsule.getCreatedAt()))
                         .build();
 
                 myTimecapsuleDtos.add(myTimecapsuleDto);
@@ -107,7 +108,7 @@ public class TimecapsuleService {
                     .nickname(timecapsule.getUser().getNickname())
                     .content(timecapsule.getContent())
                     .images(timecapsuleImages)
-                    .createdAt(timecapsule.getCreatedAt())
+                    .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(timecapsule.getCreatedAt()))
                     .build();
 
             timecapsuleDtos.add(timecapsuleDto);

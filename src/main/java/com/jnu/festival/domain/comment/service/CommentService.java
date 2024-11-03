@@ -12,6 +12,7 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class CommentService {
                         .id(comment.getId())
                         .nickname(comment.getUser().getNickname())
                         .content(comment.getContent())
-                        .createdAt(comment.getCreatedAt())
+                        .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(comment.getCreatedAt()))
                         .build())
                 .toList();
 

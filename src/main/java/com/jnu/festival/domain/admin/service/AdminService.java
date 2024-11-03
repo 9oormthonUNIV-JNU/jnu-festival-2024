@@ -40,6 +40,7 @@ import com.jnu.festival.domain.zone.repository.ZoneRepository;
 import com.jnu.festival.global.config.S3Service;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
+import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -252,7 +253,7 @@ public class AdminService {
                         .id(feedback.getId())
                         .nickname(feedback.getUser().getNickname())
                         .title(feedback.getTitle())
-                        .createdAt(feedback.getCreatedAt())
+                        .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(feedback.getCreatedAt()))
                         .build())
                 .toList();
     }
@@ -268,7 +269,7 @@ public class AdminService {
                 .title(feedback.getTitle())
                 .content(feedback.getContent())
                 .images(feedbackImages)
-                .createdAt(feedback.getCreatedAt())
+                .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(feedback.getCreatedAt()))
                 .build();
     }
 }

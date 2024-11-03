@@ -12,6 +12,7 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class ContentService {
                             .title(content.getTitle())
                             .description(content.getDescription())
                             .bookmark(contentBookmarkIds.contains(content.getId()))
-                            .createdAt(content.getCreatedAt())
+                            .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(content.getCreatedAt()))
                             .build())
                     .toList();
         }
@@ -50,7 +51,7 @@ public class ContentService {
                         .title(content.getTitle())
                         .description(content.getDescription())
                         .bookmark(false)
-                        .createdAt(content.getCreatedAt())
+                        .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(content.getCreatedAt()))
                         .build())
                 .toList();
     }
@@ -73,7 +74,7 @@ public class ContentService {
                     .description(content.getDescription())
                     .images(contentImages)
                     .bookmark(content.getId().equals(contentBookmarkId))
-                    .createdAt(content.getCreatedAt())
+                    .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(content.getCreatedAt()))
                     .build();
         }
         return ContentDto.builder()
@@ -82,7 +83,7 @@ public class ContentService {
                 .description(content.getDescription())
                 .images(contentImages)
                 .bookmark(false)
-                .createdAt(content.getCreatedAt())
+                .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(content.getCreatedAt()))
                 .build();
     }
 }

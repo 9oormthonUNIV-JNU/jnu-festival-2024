@@ -12,6 +12,7 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class PartnerService {
                             .name(partner.getName())
                             .description(partner.getDescription())
                             .bookmark(partnerBookmarkIds.contains(partner.getId()))
-                            .createdAt(partner.getCreatedAt())
+                            .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(partner.getCreatedAt()))
                             .build())
                     .toList();
         }
@@ -51,7 +52,7 @@ public class PartnerService {
                         .name(partner.getName())
                         .description(partner.getDescription())
                         .bookmark(false)
-                        .createdAt(partner.getCreatedAt())
+                        .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(partner.getCreatedAt()))
                         .build())
                 .toList();
     }
@@ -78,7 +79,7 @@ public class PartnerService {
                     .startDate(partner.getStartDate())
                     .endDate(partner.getEndDate())
                     .bookmark(partner.getId().equals(partnerBookmarkId))
-                    .createdAt(partner.getCreatedAt())
+                    .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(partner.getCreatedAt()))
                     .build();
         }
         return PartnerDto.builder()
@@ -90,7 +91,7 @@ public class PartnerService {
                 .startDate(partner.getStartDate())
                 .endDate(partner.getEndDate())
                 .bookmark(false)
-                .createdAt(partner.getCreatedAt())
+                .createdAt(LocalDateTimeConvertUtil.convertUtcToLocalDateTIme(partner.getCreatedAt()))
                 .build();
 
     }
