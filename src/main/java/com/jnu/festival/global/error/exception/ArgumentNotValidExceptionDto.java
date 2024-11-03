@@ -14,12 +14,14 @@ import java.util.Map;
 public class ArgumentNotValidExceptionDto extends ExceptionDto {
     private final Map<String, String> errorFields;
 
+
     public ArgumentNotValidExceptionDto(final MethodArgumentNotValidException methodArgumentNotValidException) {
         super(ErrorCode.INVALID_ARGUMENT);
 
         this.errorFields = new HashMap<>();
         methodArgumentNotValidException.getBindingResult()
                 .getAllErrors().forEach(e -> this.errorFields.put(((FieldError) e).getField(), e.getDefaultMessage()));
+        
     }
 
 //    public ArgumentNotValidExceptionDto(final ConstraintViolationException constraintViolationException) {
