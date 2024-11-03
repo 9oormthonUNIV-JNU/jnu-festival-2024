@@ -16,5 +16,5 @@ public interface BoothRepository extends JpaRepository<Booth, Long> {
                                                          @Param("category") BoothCategory category,
                                                          @Param("period") Period period);
 
-    List<Booth> findAllByNameContains(String keyword);
+    List<Booth> findAllByNameContainsIgnoreCase(String keyword);
 }

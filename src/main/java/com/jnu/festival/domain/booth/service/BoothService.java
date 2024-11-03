@@ -133,7 +133,7 @@ public class BoothService {
     }
 
     public List<BoothSearchListDto> readBoothSearchList(String keyword) {
-        return boothRepository.findAllByNameContains(keyword).stream()
+        return boothRepository.findAllByNameContainsIgnoreCase(keyword).stream()
                 .map(booth -> BoothSearchListDto.builder()
                         .id(booth.getId())
                         .name(booth.getName())
