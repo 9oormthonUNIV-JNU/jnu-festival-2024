@@ -1,7 +1,7 @@
 package com.jnu.festival.domain.booth.entity;
 
 
-import com.jnu.festival.domain.common.Location;
+import com.jnu.festival.global.common.Location;
 
 import com.jnu.festival.global.util.BaseTimeEntity;
 import jakarta.persistence.*;

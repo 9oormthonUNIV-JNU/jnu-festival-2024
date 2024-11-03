@@ -12,13 +12,13 @@ import com.jnu.festival.domain.booth.entity.BoothImage;
 import com.jnu.festival.domain.booth.entity.Period;
 import com.jnu.festival.domain.booth.repository.BoothImageRepository;
 import com.jnu.festival.domain.booth.repository.BoothRepository;
-import com.jnu.festival.domain.common.Location;
+import com.jnu.festival.global.common.Location;
 import com.jnu.festival.domain.like.repository.LikeRepository;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
-import com.jnu.festival.global.security.UserDetailsImpl;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -110,6 +110,7 @@ public class BoothService {
                     .likeCount(likeRepository.countAllByBoothAndIsDeletedFalse(booth))
                     .bookmark(booth.getId().equals(boothBookmarkId))
                     .description(booth.getDescription())
+                    .category(booth.getCategory().getValue())
                     .images(boothImages)
                     .build();
         }

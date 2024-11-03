@@ -4,15 +4,13 @@ import com.jnu.festival.domain.booth.service.BoothService;
 import com.jnu.festival.domain.comment.dto.request.CommentRequestDto;
 import com.jnu.festival.domain.comment.dto.response.CommentListDto;
 import com.jnu.festival.domain.comment.service.CommentService;
-import com.jnu.festival.global.security.UserDetailsImpl;
-import com.jnu.festival.global.util.ResponseDto;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.common.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

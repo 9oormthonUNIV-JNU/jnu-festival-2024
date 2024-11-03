@@ -9,18 +9,25 @@ import com.jnu.festival.domain.bookmark.repository.PartnerBookmarkRepository;
 import com.jnu.festival.domain.booth.entity.Booth;
 import com.jnu.festival.domain.content.entity.Content;
 import com.jnu.festival.domain.partner.entity.Partner;
+import com.jnu.festival.domain.user.dto.request.UserRegisterDto;
 import com.jnu.festival.domain.user.dto.response.UserDto;
 import com.jnu.festival.domain.user.entity.Role;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
-import com.jnu.festival.global.security.UserDetailsImpl;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +38,24 @@ public class UserService {
     private final ContentBookmarkRepository contentBookmarkRepository;
     private final BoothBookmarkRepository boothBookmarkRepository;
 
-    public void join(String nickname, String password) {
-        User user = User.builder()
-                .nickname(nickname)
-                .password(passwordEncoder.encode(password))
-                .role(Role.ROLE_USER)
-                .build();
-        userRepository.save(user);
+    public void signup(UserRegisterDto request) {
+        Optional<User> registeredUser = userRepository.findByNickname(request.nickname());
+
+        if (registeredUser.isEmpty()) {
+            User user = User.builder()
+                    .nickname(request.nickname())
+                    .password(passwordEncoder.encode(request.password()))
+                    .role(Role.ROLE_USER)
+                    .build();
+            userRepository.save(user);
+        }
+    }
+
+    @Transactional
+    public void updateAccessToken(UserDetailsImpl userDetails, String accessToken) {
+        User user = userRepository.findByNickname(userDetails.getUsername())
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+        user.updateAccessToken(accessToken);
     }
 
     public UserDto readUser(UserDetailsImpl userDetails) {

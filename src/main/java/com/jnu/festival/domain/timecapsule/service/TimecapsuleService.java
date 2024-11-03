@@ -12,9 +12,14 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.config.S3Service;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
-import com.jnu.festival.global.security.UserDetailsImpl;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +34,7 @@ public class TimecapsuleService {
     private final TimecapsuleRepository timecapsuleRepository;
     private final S3Service s3Service;
     private final TimecapsuleImageRepository timecapsuleImageRepository;
+    private final JavaMailSender javaMailSender;
 
     @Transactional
     public void createTimecapsule(TimecapsuleRequestDto request, List<MultipartFile> images, UserDetailsImpl userDetails) throws IOException {
@@ -145,5 +151,38 @@ public class TimecapsuleService {
 
         timecapsuleImageRepository.deleteAll(timecapsuleImages);
         timecapsuleRepository.delete(timecapsule);
+    }
+
+    @Scheduled(cron = "0 00 20 3 11 ?")
+    public void sendMail() {
+        List<Timecapsule> timecapsules = timecapsuleRepository.findAll();
+
+        for (Timecapsule timecapsule: timecapsules) {
+            List<String> images = timecapsuleImageRepository.findAllByTimecapsule(timecapsule).stream()
+                    .map(TimecapsuleImage::getUrl).toList();
+
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+            try {
+                MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+                mimeMessageHelper.setTo(timecapsule.getMailAddress());
+                mimeMessageHelper.setSubject("[전대미문] 오늘을 기억하고, 추억을 선물하세요");
+                StringBuilder text = new StringBuilder();
+                text.append("<html><body><p>");
+                text.append(timecapsule.getContent());
+                text.append("</p>");
+                for (String image: images) {
+                    text.append("<img src='");
+                    text.append(image);
+                    text.append("' alt='image' />");
+                }
+                text.append("</body></html>");
+                mimeMessageHelper.setText(text.toString(), true);
+                javaMailSender.send(mimeMessage);
+
+            } catch (MessagingException e) {
+                throw new BusinessException(ErrorCode.SEND_MAIL_ERROR);
+            }
+        }
     }
 }

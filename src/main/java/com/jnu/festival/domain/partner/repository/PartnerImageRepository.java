@@ -1,7 +1,5 @@
-package com.jnu.festival.domain.partner.Repository;
+package com.jnu.festival.domain.partner.repository;
 
-import com.jnu.festival.domain.content.entity.Content;
-import com.jnu.festival.domain.content.entity.ContentImage;
 import com.jnu.festival.domain.partner.entity.Partner;
 import com.jnu.festival.domain.partner.entity.PartnerImage;
 import org.springframework.data.jpa.repository.JpaRepository;

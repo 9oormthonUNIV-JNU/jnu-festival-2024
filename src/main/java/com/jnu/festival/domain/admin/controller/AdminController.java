@@ -7,12 +7,11 @@ import com.jnu.festival.domain.admin.dto.request.ZoneRequestDto;
 import com.jnu.festival.domain.admin.dto.response.FeedbackDto;
 import com.jnu.festival.domain.admin.dto.response.FeedbackListDto;
 import com.jnu.festival.domain.admin.service.AdminService;
-import com.jnu.festival.global.util.ResponseDto;
+import com.jnu.festival.global.common.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

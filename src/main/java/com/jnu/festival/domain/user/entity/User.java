@@ -26,10 +26,18 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "access_token")
+    private String accessToken;
+
     @Builder
-    public User(String nickname, String password, Role role) {
+    public User(String nickname, String password, Role role, String accessToken) {
         this.nickname = nickname;
         this.password = password;
         this.role = role;
+        this.accessToken = accessToken;
+    }
+
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

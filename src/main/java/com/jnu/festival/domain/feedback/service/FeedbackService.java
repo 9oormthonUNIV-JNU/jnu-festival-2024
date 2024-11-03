@@ -1,6 +1,5 @@
 package com.jnu.festival.domain.feedback.service;
 
-import com.jnu.festival.domain.common.Location;
 import com.jnu.festival.domain.feedback.dto.FeedbackRequestDto;
 import com.jnu.festival.domain.feedback.entity.Feedback;
 import com.jnu.festival.domain.feedback.entity.FeedbackCategory;
@@ -12,16 +11,13 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.config.S3Service;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
-import com.jnu.festival.global.security.UserDetailsImpl;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

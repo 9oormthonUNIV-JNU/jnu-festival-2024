@@ -1,4 +1,4 @@
-package com.jnu.festival.domain.partner.Repository;
+package com.jnu.festival.domain.partner.repository;
 
 import com.jnu.festival.domain.partner.entity.Partner;
 import org.springframework.data.jpa.repository.JpaRepository;

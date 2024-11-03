@@ -1,11 +1,10 @@
 package com.jnu.festival.domain.bookmark.dto.response;
 
-import com.jnu.festival.domain.common.Location;
+import com.jnu.festival.global.common.Location;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter

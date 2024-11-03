@@ -23,13 +23,14 @@ public class BoothDto {
     private final Long likeCount;
     private final Boolean bookmark;
     private final String description;
+    private final String category;
     private final List<String> images;
 
     @Builder
     public BoothDto(Long id, String name, String location, Integer index, BoothCategory boothCategory,
                     LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime,
                     Boolean like, Long likeCount, Boolean bookmark,
-                    String description, List<String> images) {
+                    String description, String category, List<String> images) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -43,6 +44,7 @@ public class BoothDto {
         this.likeCount = likeCount;
         this.bookmark = bookmark;
         this.description = description;
+        this.category = category;
         this.images = images;
     }
 }

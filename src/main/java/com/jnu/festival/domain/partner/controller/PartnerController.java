@@ -1,11 +1,10 @@
-package com.jnu.festival.domain.partner.Controller;
+package com.jnu.festival.domain.partner.controller;
 
-import com.jnu.festival.domain.partner.DTO.PartnerDto;
-import com.jnu.festival.domain.partner.DTO.PartnerListDto;
-import com.jnu.festival.domain.partner.entity.Partner;
-import com.jnu.festival.domain.partner.Service.PartnerService;
-import com.jnu.festival.global.security.UserDetailsImpl;
-import com.jnu.festival.global.util.ResponseDto;
+import com.jnu.festival.domain.partner.dto.PartnerDto;
+import com.jnu.festival.domain.partner.dto.PartnerListDto;
+import com.jnu.festival.domain.partner.service.PartnerService;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

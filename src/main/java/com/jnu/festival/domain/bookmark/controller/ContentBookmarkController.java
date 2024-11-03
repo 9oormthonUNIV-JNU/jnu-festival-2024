@@ -1,8 +1,8 @@
 package com.jnu.festival.domain.bookmark.controller;
 
 import com.jnu.festival.domain.bookmark.service.ContentBookmarkService;
-import com.jnu.festival.global.security.UserDetailsImpl;
-import com.jnu.festival.global.util.ResponseDto;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

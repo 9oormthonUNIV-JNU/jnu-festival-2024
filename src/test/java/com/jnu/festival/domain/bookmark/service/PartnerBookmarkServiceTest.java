@@ -2,14 +2,14 @@ package com.jnu.festival.domain.bookmark.service;
 
 import com.jnu.festival.domain.bookmark.entity.PartnerBookmark;
 import com.jnu.festival.domain.bookmark.repository.PartnerBookmarkRepository;
-import com.jnu.festival.domain.partner.Repository.PartnerRepository;
+import com.jnu.festival.domain.partner.repository.PartnerRepository;
 import com.jnu.festival.domain.partner.entity.Partner;
 import com.jnu.festival.domain.user.entity.Role;
 import com.jnu.festival.domain.user.entity.User;
 import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
-import com.jnu.festival.global.security.UserDetailsImpl;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

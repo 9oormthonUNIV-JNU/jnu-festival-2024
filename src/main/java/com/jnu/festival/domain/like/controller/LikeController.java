@@ -3,8 +3,8 @@ package com.jnu.festival.domain.like.controller;
 
 import com.jnu.festival.domain.like.dto.response.LikeDto;
 import com.jnu.festival.domain.like.service.LikeService;
-import com.jnu.festival.global.security.UserDetailsImpl;
-import com.jnu.festival.global.util.ResponseDto;
+import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import com.jnu.festival.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

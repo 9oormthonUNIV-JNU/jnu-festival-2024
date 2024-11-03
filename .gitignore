@@ -36,19 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
-/src/main/resources/application.yml
-/application-private.properties
-
-
 ### Mac OS ###
 .DS_Store
 
 ### application.yml ###
 /src/main/resources/application.yml
-
-/src/main/resources/application-test.yml
-/src/test/java/com/jnu/festival/api/domain/
-/src/test/java/com/jnu/festival/api/domain/
-/src/test/java/com/jnu/festival/api/domain/booth/
-/src/test/java/com/jnu/festival/api/domain/booth/repository
-/src/test/java/com/jnu/festival/api/domain/booth/service
