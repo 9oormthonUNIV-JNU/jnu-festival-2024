@@ -108,10 +108,18 @@ public class DefaultAuthenticationFilter extends AbstractAuthenticationProcessin
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         if (failed.getCause() instanceof ConstraintViolationException) {
-            String[] errorFields = failed.getMessage().split("(?<=\\.) ");
+            String[] errors = failed.getMessage().split("(?<=\\.) ");
+
+            Map<String, String> errorFields = new HashMap<>();
+            for (String error: errors) {
+                String[] errorMessage = error.split(": ", 2);
+                errorFields.put(errorMessage[0], errorMessage[1]);
+            }
 
             Map<String, Object> errorMessages = new HashMap<>();
-            errorMessages.put("message", errorFields);
+            errorMessages.put("message", "유효하지 않은 인자입니다.");
+            errorMessages.put("error_fields", errorFields);
+
 
             Map<String, Object> responsebody = new HashMap<>();
             responsebody.put("success", false);
