@@ -1,5 +1,6 @@
 package com.jnu.festival.domain.feedback.service;
 
+import com.jnu.festival.domain.booth.entity.BoothCategory;
 import com.jnu.festival.domain.common.Location;
 import com.jnu.festival.domain.feedback.dto.FeedbackRequestDto;
 import com.jnu.festival.domain.feedback.entity.Feedback;
@@ -33,6 +34,11 @@ public class FeedbackService {
 
     @Transactional
     public void createFeedback(FeedbackRequestDto request, MultipartFile image, UserDetailsImpl userDetails) throws IOException {
+
+        if (!request.category().isEmpty() && FeedbackCategory.from(request.category()) == null) {
+            throw new BusinessException(ErrorCode.INVALID_CATEGORY);
+        }
+
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
 
