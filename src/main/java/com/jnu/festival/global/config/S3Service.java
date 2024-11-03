@@ -1,5 +1,9 @@
 package com.jnu.festival.global.config;
 
+import com.jnu.festival.global.error.ErrorCode;
+import com.jnu.festival.global.error.exception.BusinessException;
+import java.util.Arrays;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,7 +15,6 @@ import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -26,7 +29,8 @@ public class S3Service {
     private final S3Client s3Client;
 
     public String upload(MultipartFile file, String directoryName) throws IOException {
-        String filename = directoryName + "/" + file.getOriginalFilename();
+        String randomFilename =  generateRandomFilename(file);
+        String filename = directoryName + "/" + randomFilename;
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
@@ -53,5 +57,29 @@ public class S3Service {
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest);
+    }
+
+    // 랜덤 파일명 생성(파일명 중복 방지)
+    private String generateRandomFilename(MultipartFile multipartFile) {
+        String originalFilename = multipartFile.getOriginalFilename();
+        assert originalFilename != null;
+        String fileExtension = validateFileExtension(originalFilename);
+        return UUID.randomUUID() + "." + fileExtension;
+    }
+
+    // 파일 확장자 체크 및 예외 처리
+    private String validateFileExtension(String originalFilename) {
+        int lastDotIndex = originalFilename.lastIndexOf(".");
+        if(lastDotIndex == -1) {
+            throw new BusinessException(ErrorCode.NO_FILE_EXTENSION);
+        }
+
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+        List<String> allowedExtensions = Arrays.asList("jpg", "png", "jpeg");
+
+        if (!allowedExtensions.contains(fileExtension)) {
+            throw new BusinessException(ErrorCode.INVALID_IMAGE_EXTENSION);
+        }
+        return fileExtension;
     }
 }

@@ -44,6 +44,7 @@ public enum ErrorCode {
     BAD_REQUEST_JSON(HttpStatus.BAD_REQUEST, "잘못된 JSON 형식입니다."),
     DUPLICATED_USER(HttpStatus.BAD_REQUEST, "중복된 사용자입니다."),
     INVALID_LOCATION(HttpStatus.BAD_REQUEST, "유효하지 않은 장소입니다."),
+    NO_FILE_EXTENSION(HttpStatus.BAD_REQUEST, "파일에 확장자가 없습니다."),
 
     // Unauthorized Error
     UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다."),
@@ -60,6 +61,9 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     NOT_MATCH_USER(HttpStatus.FORBIDDEN, "해당 사용자가 일치하지 않습니다."),
     NOT_MATCH_BOOTH(HttpStatus.FORBIDDEN, "해당 부스가 일치하지 않습니다"),
+
+    // Unsupported Media Type
+    INVALID_IMAGE_EXTENSION(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "허용되지 않는 이미지 확장자입니다."),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러입니다."),
