@@ -1,99 +1,119 @@
 package com.jnu.festival.domain.timecapsule.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jnu.festival.domain.timecapsule.dto.request.TimecapsuleRequestDto;
-import com.jnu.festival.global.security.config.SecurityConfig;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import com.jnu.festival.domain.timecapsule.entity.Timecapsule;
+import com.jnu.festival.domain.timecapsule.repository.TimecapsuleImageRepository;
+import com.jnu.festival.domain.timecapsule.repository.TimecapsuleRepository;
+import com.jnu.festival.domain.user.entity.User;
+import com.jnu.festival.domain.user.repository.UserRepository;
+import com.jnu.festival.global.config.S3Service;
+import com.jnu.festival.global.security.UserDetailsImpl;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.function.RequestPredicates;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value.Str;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 public class TimecapsuleServiceTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @InjectMocks
+    private TimecapsuleService timecapsuleService;
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    @Mock
+    private S3Service s3Service;
 
-    private HttpHeaders headers;
-    private String token = "";
+    @Mock
+    private User actualUser;
 
-    private TimecapsuleRequestDto requestDto;
+    @Mock
+    private TimecapsuleRepository timecapsuleRepository;
+
+    @Mock
+    private TimecapsuleImageRepository timecapsuleImageRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private TimecapsuleRequestDto timecapsuleRequestDto;
+
+    @Mock
+    private Timecapsule timecapsule;
+
+    @Mock
+    private UserDetailsImpl principal;
 
     @BeforeEach
     void setUp() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        principal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        actualUser = principal.getUser();
+
+        timecapsuleRequestDto = new TimecapsuleRequestDto("test", "test", true);
+        timecapsule = Timecapsule.builder()
+                .user(actualUser)
+                .mailAddress(timecapsuleRequestDto.mailAddress())
+                .content(timecapsuleRequestDto.content())
+                .isPublic(timecapsuleRequestDto.isPublic())
+                .build();
     }
 
     @Test
     @WithMockUser
-    void 타임캡슐_이미지_제외_생성_테스트() throws Exception {
-        headers.set("Authorization", token);
-        // given
-        final String filePath = "src/test/resources/testImage/profileImg.png";
-        MockMultipartFile images = new MockMultipartFile("images", "profileImg.png", MediaType.MULTIPART_FORM_DATA_VALUE, "test-image-file-content-with-string".getBytes());
-//        MockMultipartFile image2 = new MockMultipartFile("images", "profileImg.png", MediaType.MULTIPART_FORM_DATA_VALUE, "test-image-file-content-with-string".getBytes());
+    void 타임캡슐_생성_테스트() throws Exception {
+        //given
+        List<MultipartFile> images = List.of(
+                new MockMultipartFile(
+                        "images",
+                        "image.jpg",
+                        "image/jpeg",
+                        "test-image".getBytes()
+                ),
+                new MockMultipartFile(
+                        "images",
+                        "image.jpg",
+                        "image/jpeg",
+                        "test-image".getBytes()
+                )
+        );
 
-        TimecapsuleRequestDto timecapsuleRequestDto = new TimecapsuleRequestDto("test", "test", true);
-        String jsonContent = objectMapper.writeValueAsString(timecapsuleRequestDto);
+        //when
+        when(userRepository.findByNickname(anyString())).thenReturn(Optional.of(actualUser));
+        when(timecapsuleRepository.save(any(Timecapsule.class))).thenReturn(timecapsule);
+        when(s3Service.upload(any(MultipartFile.class), anyString()))
+                .thenReturn("https://s3.amazonaws.com/test-image-url");
 
-        MockMultipartFile request = new MockMultipartFile("request", "request.json", MediaType.APPLICATION_JSON_VALUE, jsonContent.getBytes(
-                StandardCharsets.UTF_8));
+        timecapsuleService.createTimecapsule(timecapsuleRequestDto, images, new UserDetailsImpl(actualUser));
 
-        mockMvc.perform(
-                        multipart("/api/v1/timecapsules")
-                                .file(images)
-//                                .file(image2)
-                                .file(request)
-                                .headers(headers)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .characterEncoding("UTF-8")
-                ).andExpect(status().isOk())
-                .andDo(print());
-
+        // then
+        verify(timecapsuleRepository, times(1)).save(any(Timecapsule.class));
+        verify(timecapsuleImageRepository, times(images.size())).saveAll(anyList());
+        verify(s3Service, times(images.size())).upload(any(MultipartFile.class), eq("timecapsule"));
     }
 }
