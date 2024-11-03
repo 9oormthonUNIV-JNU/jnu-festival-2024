@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Getter
@@ -64,6 +65,10 @@ public class ResponseDto<T> {
 
     public static ResponseDto<Object> fail(final MissingServletRequestParameterException e) {
         return new ResponseDto<>(false, null, ExceptionDto.of(ErrorCode.MISSING_REQUEST_PARAMETER));
+    }
+
+    public static ResponseDto<Object> fail(final MaxUploadSizeExceededException e) {
+        return new ResponseDto<>(false, null, ExceptionDto.of(ErrorCode.EXCEEDED_MAX_SIZE));
     }
 
     public static ResponseDto<Object> fail(final MethodArgumentTypeMismatchException e) {

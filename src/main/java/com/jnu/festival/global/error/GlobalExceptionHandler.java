@@ -14,6 +14,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 
@@ -74,6 +75,11 @@ public class GlobalExceptionHandler {
     // 필수 파라미터가 누락되었을 때 발생하는 예외
     @ExceptionHandler(value = {MissingServletRequestParameterException.class})
     public ResponseEntity<ResponseDto<?>> handleArgumentNotValidException(MissingServletRequestParameterException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseDto.fail(e));
+    }
+
+    @ExceptionHandler(value = {MaxUploadSizeExceededException.class})
+    public ResponseEntity<ResponseDto<?>> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseDto.fail(e));
     }
 

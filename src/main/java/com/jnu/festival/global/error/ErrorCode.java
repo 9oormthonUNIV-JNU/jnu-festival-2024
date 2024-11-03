@@ -42,6 +42,7 @@ public enum ErrorCode {
     BAD_REQUEST_PARAMETER(HttpStatus.BAD_REQUEST, "잘못된 요청 파라미터입니다."),
     UNSUPPORTED_MEDIA_TYPE(HttpStatus.BAD_REQUEST, "지원하지 않는 미디어 타입입니다."),
     BAD_REQUEST_JSON(HttpStatus.BAD_REQUEST, "잘못된 JSON 형식입니다."),
+    EXCEEDED_MAX_SIZE(HttpStatus.BAD_REQUEST, "파일 크키가 3MB를 초과했습니다."),
     DUPLICATED_USER(HttpStatus.BAD_REQUEST, "중복된 사용자입니다."),
     INVALID_LOCATION(HttpStatus.BAD_REQUEST, "유효하지 않은 장소입니다."),
     NO_FILE_EXTENSION(HttpStatus.BAD_REQUEST, "파일에 확장자가 없습니다."),
