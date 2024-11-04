@@ -24,7 +24,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(value = "/zones")
-    public ResponseEntity<?> createZone(@Valid @RequestBody ZoneRequestDto request) throws Exception {
+    public ResponseEntity<?> createZone(@RequestBody ZoneRequestDto request) throws Exception {
         adminService.createZone(request);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
@@ -37,7 +37,6 @@ public class AdminController {
 
     @PostMapping(value = "/partners", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> createPartner(@Valid @RequestPart PartnerRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
-        System.out.println(1);
         adminService.createPartner(request, images);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
@@ -49,7 +48,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/contents", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createContent(@Valid @RequestPart ContentRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
+    public ResponseEntity<?> createContent(@RequestPart ContentRequestDto request, @RequestPart(required = false) List<MultipartFile> images) throws Exception {
         adminService.createContent(request, images);
         return ResponseEntity.ok(ResponseDto.created(null));
     }
