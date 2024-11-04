@@ -11,7 +11,6 @@ public record FeedbackRequestDto(
         @NotBlank(message = "피드백 종류는 필수입니다.")
         String category,
         @NotBlank(message = "피드백 내용은 필수입니다.")
-
         @Size(max = 500, message = "피드백 내용은 500자 이하이어야 합니다.")  // 맥시멈 500
         String content
 ) {

@@ -104,12 +104,15 @@ public class AdminService {
                         .description(request.description())
                         .build()
         );
+        System.out.println(2);
 
         if (images != null) {
+            System.out.println(3);
             List<PartnerImage> partnerImages = new ArrayList<>();
 
             for (MultipartFile image : images) {
                 String url = s3Service.upload(image, "partner");
+                System.out.println(4);
                 PartnerImage partnerImage = PartnerImage.builder()
                         .partner(partner)
                         .url(url)
