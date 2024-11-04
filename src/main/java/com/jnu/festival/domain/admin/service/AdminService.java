@@ -73,9 +73,9 @@ public class AdminService {
 
     @Transactional
     public void createZone(ZoneRequestDto request) {
-        if (Location.from(request.location()) == null) {
-            throw new BusinessException(ErrorCode.INVALID_LOCATION);
-        }
+//        if (Location.from(request.location()) == null) {
+//            throw new BusinessException(ErrorCode.INVALID_LOCATION);
+//        }
 
         zoneRepository.save(
                 Zone.builder()
