@@ -154,7 +154,7 @@ public class TimecapsuleService {
         timecapsuleRepository.delete(timecapsule);
     }
 
-    @Scheduled(cron = "0 00 20 3 11 ?")
+    @Scheduled(cron = "0 0 0 8 11 ?")
     public void sendMail() {
         List<Timecapsule> timecapsules = timecapsuleRepository.findAll();
 
