@@ -1,13 +1,18 @@
 package com.jnu.festival.domain.feedback.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record FeedbackRequestDto(
-        @Size(max = 30, message = "Feedback title은 30자를 초과할 수 없습니다.")  // 맥시멈 30
+        @NotBlank(message = "피드백 제목은 필수입니다.")
+        @Size(max = 30, message = "피드백 제목은 30자 이하이어야 합니다.")  // 맥시멈 30
         String title,
-        String category,
 
-        @Size(max = 500, message = "Feedback Content는 500자를 초과할 수 없습니다.")  // 맥시멈 500
+        @NotBlank(message = "피드백 종류는 필수입니다.")
+        String category,
+        @NotBlank(message = "피드백 내용은 필수입니다.")
+
+        @Size(max = 500, message = "피드백 내용은 500자 이하이어야 합니다.")  // 맥시멈 500
         String content
 ) {
 }
