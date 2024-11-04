@@ -38,20 +38,19 @@ public class BoothService {
 
     //카테고리별 부스 목록 조회
     public List<BoothListDto> readBoothList(String location, String period, String category, UserDetailsImpl userDetails) {
-        //location, period , category 검증
-        Location convertLocation = Location.from(location);
+//        Location convertLocation = Location.from(location);
 
-        if (!location.isEmpty() && convertLocation == null) {
-            throw new BusinessException(ErrorCode.INVALID_LOCATION);
-        }
-
-        if (!period.isEmpty() && Period.from(period) == null) {
-            throw new BusinessException(ErrorCode.INVALID_PERIOD);
-        }
-
-        if (!category.isEmpty() && BoothCategory.from(category) == null) {
-            throw new BusinessException(ErrorCode.INVALID_CATEGORY);
-        }
+//        if (!location.isEmpty() && convertLocation == null) {
+//            throw new BusinessException(ErrorCode.INVALID_LOCATION);
+//        }
+//
+//        if (!period.isEmpty() && Period.from(period) == null) {
+//            throw new BusinessException(ErrorCode.INVALID_PERIOD);
+//        }
+//
+//        if (!category.isEmpty() && BoothCategory.from(category) == null) {
+//            throw new BusinessException(ErrorCode.INVALID_CATEGORY);
+//        }
 
         List<Booth> booths = boothRepository.findAllByLocationAndAndCategoryAndPeriod(Location.from(location), BoothCategory.from(category), Period.from(period));
 
