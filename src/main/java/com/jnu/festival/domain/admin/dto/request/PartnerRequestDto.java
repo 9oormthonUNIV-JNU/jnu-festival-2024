@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public record PartnerRequestDto(
         @NotBlank(message = "제휴업체 이름은 필수입니다.")
         String name,
+        @NotNull
         String location,
         @NotNull(message = "제휴업체 시작 날짜는 필수입니다.")
         LocalDate startDate,
