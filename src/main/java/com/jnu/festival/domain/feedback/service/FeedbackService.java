@@ -30,6 +30,7 @@ public class FeedbackService {
     private final FeedbackImageRepository feedbackImageRepository;
 
     @Transactional
+
     public void createFeedback(FeedbackRequestDto request, List<MultipartFile> images, UserDetailsImpl userDetails) throws IOException {
         if (!request.category().isEmpty() && FeedbackCategory.from(request.category()) == null) {
             throw new BusinessException(ErrorCode.INVALID_CATEGORY);

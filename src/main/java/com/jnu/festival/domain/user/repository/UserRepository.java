@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select user.accessToken from User as user where user.nickname = :nickname")
     Optional<String> findAccessTokenByNickname(String nickname);
+
+    @Query("select user.role from User as user where user.accessToken = :accessToken")
+    Optional<String> findRoleByAccessToken(String accessToken);
 }

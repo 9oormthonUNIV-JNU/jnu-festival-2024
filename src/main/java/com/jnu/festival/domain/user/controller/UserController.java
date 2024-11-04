@@ -7,6 +7,7 @@ import com.jnu.festival.domain.user.dto.response.UserDto;
 import com.jnu.festival.domain.user.service.UserService;
 import com.jnu.festival.global.common.ResponseDto;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,12 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+
+    @GetMapping(value = "/check-admins")
+    public ResponseEntity<?> checkAdmin(HttpServletRequest request) throws Exception {
+        userService.checkAdmin(request);
+        return ResponseEntity.ok(ResponseDto.ok(null));
+    }
 
     @GetMapping(value = "")
     public ResponseEntity<?> readUser(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {

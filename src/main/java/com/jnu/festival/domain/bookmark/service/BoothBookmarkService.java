@@ -54,6 +54,7 @@ public class BoothBookmarkService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTH));
         BoothBookmark boothBookmark = boothBookmarkRepository.findByUserAndBooth(user, booth)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOOTHBOOKMARK));
+        
         boothBookmarkRepository.delete(boothBookmark);
     }
 }

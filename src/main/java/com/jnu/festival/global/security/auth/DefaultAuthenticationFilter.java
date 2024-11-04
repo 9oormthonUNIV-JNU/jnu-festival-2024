@@ -9,6 +9,7 @@ import com.jnu.festival.global.common.ResponseDto;
 import com.jnu.festival.global.security.jwt.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolation;
@@ -87,7 +88,6 @@ public class DefaultAuthenticationFilter extends AbstractAuthenticationProcessin
         String accessToken = jwtUtil.getToken(userDetails);
         if (accessToken == null) {
             accessToken = jwtUtil.generateToken(userDetails);
-            System.out.println(accessToken);
             userService.updateAccessToken(userDetails, accessToken);
         }
         response.setHeader("Access-Token", accessToken);

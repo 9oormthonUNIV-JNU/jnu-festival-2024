@@ -17,6 +17,8 @@ import com.jnu.festival.domain.user.repository.UserRepository;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.security.auth.UserDetailsImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -25,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -56,6 +59,24 @@ public class UserService {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
         user.updateAccessToken(accessToken);
+    }
+
+    public void checkAdmin(HttpServletRequest request) {
+        Optional<Cookie> cookie = Arrays.stream(request.getCookies())
+                .filter(c-> c.getName().equals("Authorization"))
+                .findFirst();
+
+        if (cookie.isEmpty()) {
+            throw new BusinessException(ErrorCode.INVALID_HEADER_ERROR);
+        }
+
+        String accessToken = cookie.get().getValue();
+        String role = userRepository.findRoleByAccessToken(accessToken)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+
+        if (role.equals("ROLE_USER")) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+        }
     }
 
     public UserDto readUser(UserDetailsImpl userDetails) {
@@ -97,7 +118,7 @@ public class UserService {
     public List<BoothBookmarkListDto> readBoothBookmark(UserDetailsImpl userDetails) {
         User user = userRepository.findByNickname(userDetails.getUsername())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
-        List<Booth> booths = boothBookmarkRepository.findAllByUser(user);
+        List<Booth> booths = boothBookmarkRepository.findAllByUserAndIsDeleted(user);
         return booths.stream()
                 .map(booth -> BoothBookmarkListDto.builder()
                         .id(booth.getId())

@@ -41,6 +41,8 @@ import com.jnu.festival.global.config.S3Service;
 import com.jnu.festival.global.error.ErrorCode;
 import com.jnu.festival.global.error.exception.BusinessException;
 import com.jnu.festival.global.util.LocalDateTimeConvertUtil;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +50,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +77,7 @@ public class AdminService {
 
     @Transactional
     public void createZone(ZoneRequestDto request) {
+
 //        if (Location.from(request.location()) == null) {
 //            throw new BusinessException(ErrorCode.INVALID_LOCATION);
 //        }
